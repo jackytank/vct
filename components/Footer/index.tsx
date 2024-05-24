@@ -85,7 +85,7 @@ const Footer = () => {
                 <ul>
                   <li>
                     <a
-                      href="#"
+                      href="/"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Trang chủ
@@ -93,7 +93,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/dich-vu"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Dịch vụ
@@ -101,7 +101,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/gioi-thieu"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Giới thiệu
@@ -109,7 +109,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/ke-chuyen"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Kể chuyện
@@ -117,7 +117,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/hau-truong"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Hậu trường
@@ -151,7 +151,7 @@ const Footer = () => {
                 <ul>
                   <li>
                     <a
-                      href="#"
+                      href="/gioi-thieu"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Về chúng tôi
@@ -159,7 +159,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/lien-he"
                       className="mb-3 inline-block hover:text-primary"
                     >
                       Liên hệ
@@ -256,17 +256,17 @@ const Footer = () => {
           >
             <ul className="flex items-center gap-8">
               <li>
-                <a href="#" className="hover:text-primary">
+                <a href="/" className="hover:text-primary">
                   &nbsp;
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary">
+                <a href="/" className="hover:text-primary">
                   &nbsp;
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary">
+                <a href="/" className="hover:text-primary">
                   &nbsp;
                 </a>
               </li>
@@ -316,7 +316,7 @@ const Footer = () => {
           >
             <ul className="flex items-center gap-5">
               <li>
-                <a href="#" aria-label="social icon">
+                <a href="/" aria-label="social icon">
                   <svg
                     className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
                     width="24"
@@ -340,7 +340,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" aria-label="social icon">
+                <a href="/" aria-label="social icon">
                   <svg
                     className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
                     width="24"
@@ -364,7 +364,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" aria-label="social icon">
+                <a href="/" aria-label="social icon">
                   <svg
                     className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
                     width="24"
