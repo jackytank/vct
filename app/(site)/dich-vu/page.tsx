@@ -12,13 +12,13 @@ const ServicesPage = () => {
             {/* component */}
             <div
                 id="services"
-                className="section relative pt-20 pb-8 md:pt-16 md:pb-0"
+                className="section relative pb-20 pt-40 mt-15 md:pt-16 md:pb-0"
             >
                 <div className="container xl:max-w-6xl mx-auto px-4">
                     {/* Heading start */}
                     <header className="text-center mx-auto mb-12 lg:px-20">
                         <h2 className="text-2xl leading-normal mb-2 font-bold text-black">
-                            What We Do
+                            Dịch vụ của chúng tôi
                         </h2>
                         <svg
                             version="1.1"
