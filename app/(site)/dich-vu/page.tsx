@@ -53,7 +53,7 @@ const ServicesPage = () => {
                             />
                         </svg>
                         <p className="text-gray-500 leading-relaxed font-light text-xl mx-auto pb-2">
-                            Save time managing advertising &amp; Content for your business.
+                            Tiết kiệm thời gian quản lý quảng cáo &amp; Nội dung cho doanh nghiệp của bạn.
                         </p>
                     </header>
                     {/* End heading */}
@@ -84,11 +84,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    SEO Services
+                                    Dịch vụ SEO
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Giúp website của bạn đạt được thứ hạng cao trên các công cụ tìm kiếm.
                                 </p>
                             </div>
                             {/* end service block */}
@@ -121,11 +120,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    Social Content
+                                    Nội dung mạng xã hội
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Cung cấp nội dung chất lượng & quản lí mạng xã hội cho doanh nghiệp.
                                 </p>
                             </div>
                             {/* end service block */}
@@ -158,11 +156,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    Creative ads
+                                    Quảng cáo
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Cuộc sống của bạn sẽ dễ dàng hơn với dịch vụ quảng cáo của chúng tôi.
                                 </p>
                             </div>
                             {/* end service block */}
@@ -193,11 +190,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    Brand Identity
+                                    Thương hiệu
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Tạo dựng thương hiệu cho doanh nghiệp của bạn bằng sự tỉ mỉ &amp; chuyên nghiệp.
                                 </p>
                             </div>
                             {/* end service block */}
@@ -229,11 +225,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    Budget &amp; Marketing
+                                    Marketing
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Đa dạng dịch vụ marketing cho doanh nghiệp của bạn, hài lòng khách hàng.
                                 </p>
                             </div>
                             {/* end service block */}
@@ -265,11 +260,10 @@ const ServicesPage = () => {
                                     </svg>
                                 </div>
                                 <h3 className="text-lg leading-normal mb-2 font-semibold text-black">
-                                    Optimize conversions
+                                    Tối ưu hóa
                                 </h3>
                                 <p className="text-gray-500">
-                                    This is a wider card with supporting text below as a natural
-                                    content.
+                                    Tối ưu hóa website của bạn để tăng hiệu suất kinh doanh, cải thiện trải nghiệm người dùng.
                                 </p>
                             </div>
                             {/* end service block */}
