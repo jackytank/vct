@@ -11,19 +11,19 @@ const menuData: Menu[] = [
     id: 2,
     title: "DỊCH VỤ",
     newTab: false,
-    path: "/#features",
+    path: "/dich-vu",
   },
   {
     id: 2.3,
     title: "GIỚI THIỆU",
     newTab: false,
-    path: "/docs",
+    path: "/gioi-thieu",
   },
   {
     id: 2.1,
     title: "KỂ CHUYỆN",
     newTab: false,
-    path: "/blog",
+    path: "/ke-chuyen",
   },
 
   // {
@@ -74,7 +74,7 @@ const menuData: Menu[] = [
     id: 4,
     title: "HẬU TRƯỜNG",
     newTab: false,
-    path: "#",
+    path: "/hau-truong",
   },
 ];
 

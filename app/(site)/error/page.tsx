@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Error Page - Solid SaaS Boilerplate",
-  description: "This is Error page for Solid Pro",
+  title: "Có Lỗi",
+  description: "Trang lỗi của Thiên Đăng - Vườn Cổ Tích",
   // other metadata
 };
 
@@ -20,18 +20,17 @@ const ErroPage = () => {
         />
 
         <h2 className="mb-5 text-2xl font-semibold text-black dark:text-white md:text-4xl">
-          This Page Does Not Exist
+          Trang này không tồn tại
         </h2>
         <p className="mb-7.5">
-          The page you were looking for appears to have been moved, deleted or
-          does not exist.
+          Trang bạn đang tìm kiếm có vẻ đã được di dời, bị xóa hoặc không tồn tại
         </p>
 
         <a
           href="/"
           className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
         >
-          Return to Home
+          Về trang chủ
           <svg
             className="fill-white"
             width="14"
