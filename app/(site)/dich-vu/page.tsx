@@ -1,4 +1,10 @@
+import { Metadata } from 'next';
 import React from 'react';
+
+export const metadata: Metadata= {
+    title: "Dịch Vụ",
+    description: "Trang dịch vụ của Thiên Đăng - Vườn Cổ Tích",
+};
 
 const ServicesPage = () => {
     return (
