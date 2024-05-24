@@ -24,10 +24,12 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
         >
-          <Lines />
+          {/* <Lines /> */}
           <Header />
           <ToasterContext />
-          {children}
+          <div className="mt-[12.5vh] border border-y-2">
+            {children}
+          </div>
           <Footer />
           <ScrollToTop />
         </ThemeProvider>

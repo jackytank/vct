@@ -1,6 +1,6 @@
 {
-  "name": "solid-nextjs",
-  "version": "0.2.0",
+  "name": "vuon-co-tich",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
