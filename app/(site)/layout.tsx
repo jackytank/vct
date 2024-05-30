@@ -27,7 +27,7 @@ export default function RootLayout({
           {/* <Lines /> */}
           <Header />
           <ToasterContext />
-          <div className="mt-[12.5vh] border border-y-2">
+          <div className="border border-y-2">
             {children}
           </div>
           <Footer />

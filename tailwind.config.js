@@ -16,6 +16,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        'thiendang-text-hover-color': "#A22D1B",
         current: "currentColor",
         transparent: "transparent",
         stroke: "#EEEEEE",

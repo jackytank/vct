@@ -1,9 +1,27 @@
 "use client";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const SidebarLink = () => {
   return (
-    <>
+    <motion.div
+      variants={{
+        hidden: {
+          opacity: 0,
+          y: -20,
+        },
+
+        visible: {
+          opacity: 1,
+          y: 0,
+        },
+      }}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 1, delay: 0.1 }}
+      viewport={{ once: true }}
+      className="animate_top"
+    >
       <li className="block">
         <Link
           href={`/docs`}
@@ -30,7 +48,7 @@ const SidebarLink = () => {
           Thành tựu
         </Link>
       </li>
-    </>
+    </motion.div>
   );
 };
 
