@@ -33,9 +33,9 @@ const Header = () => {
   return (
     <header
       className={`fixed left-0 top-0 z-99999 w-full 
-      bg-white shadow transition duration-100 dark:bg-black`}
+      bg-white !py-[6vh] shadow transition duration-100 dark:bg-black`}
     >
-      <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0 h-[12.5vh]">
+      <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
         <div className="flex w-full items-center justify-between xl:w-1/4">
           {/* <a href="/">
             <Image
