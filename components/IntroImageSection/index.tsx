@@ -9,7 +9,20 @@ import React, { useEffect, useState } from 'react';
 const IntroImageSection = () => {
     const { theme } = useTheme();
     const [scrollIcon, setScrollIcon] = useState('/images/icon/down-light.png');
-
+    const handleScrollToSection = (e) => {
+        e.preventDefault(); // Prevent default anchor behavior
+        const miniGameSection = document.getElementById('miniGameSection');
+        if (miniGameSection) {
+            // Calculate the position to scroll to, accounting for the fixed header height as a percentage of the viewport height
+            const headerOffset = window.innerHeight * 0.125; // 12.5% of the viewport height
+            const sectionPosition = miniGameSection.offsetTop - headerOffset;
+            window.scrollTo({
+                top: sectionPosition,
+                behavior: 'smooth',
+            });
+        }
+    };
+    
     useEffect(() => {
         console.log(theme);
         setScrollIcon(theme === 'dark' ? '/images/icon/down-dark.png' : '/images/icon/down-light.png');
@@ -79,7 +92,7 @@ const IntroImageSection = () => {
                 </Carousel>
             </motion.div>
             <div className="absolute bottom-10 left-2/4 z-50 -translate-x-2/4">
-                <Link href="#miniGameSection">
+                <Link href="#miniGameSection" onClick={handleScrollToSection}>
                     <Image
                         src={scrollIcon}
                         alt="Scroll Down"
