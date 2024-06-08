@@ -13,6 +13,7 @@ import Contact from "@/components/Contact";
 import Blog from "@/components/Blog";
 import Testimonial from "@/components/Testimonial";
 import IntroVideo from "@/components/IntroVideo";
+import IntroImageSection from "@/components/IntroImageSection";
 
 export const metadata: Metadata = {
   title: "Thiên Đăng",
@@ -23,7 +24,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <IntroVideo />
+      <IntroImageSection />
+      {/* <IntroVideo /> */}
       {/* <Hero /> */}
       {/* <Brands />
       <Feature />
