@@ -30,9 +30,26 @@ const withMotion = (children: React.ReactNode) => {
 
 const IntroImageSection = () => {
     return (
-        <section className="pt-30 lg:pt-0 xl:pt-0">
+        <section className="pt-30 lg:pt-0 xl:pt-0 relative">
             {/* <img src="/images/intro/img1.jpg" alt="intro_image_1" className="w-auto min-w-full min-h-full max-w-none object-cover" /> */}
-            {withMotion(
+            <motion.div
+                variants={{
+                    hidden: {
+                        opacity: 0,
+                        y: -20,
+                    },
+
+                    visible: {
+                        opacity: 1,
+                        y: 0,
+                    },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ duration: 1, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="animate_top flex justify-center items-center"
+            >
                 <Carousel
                     loop={true}
                     autoplay={true}
@@ -74,7 +91,12 @@ const IntroImageSection = () => {
                         alt='i13'
                     />
                 </Carousel>
-            )}
+            </motion.div>
+            <div className="absolute bottom-10 left-2/4 z-50 -translate-x-2/4">
+                <a href="#miniGameSection" className="p-2 bg-blue-500 text-white rounded-md">
+                    Play Mini-Game
+                </a>
+            </div>
         </section>
     );
 };

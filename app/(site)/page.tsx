@@ -14,6 +14,7 @@ import Blog from "@/components/Blog";
 import Testimonial from "@/components/Testimonial";
 import IntroVideo from "@/components/IntroVideo";
 import IntroImageSection from "@/components/IntroImageSection";
+import MiniGameSection from "@/components/MiniGameSection";
 
 export const metadata: Metadata = {
   title: "Thiên Đăng",
@@ -25,6 +26,7 @@ export default function Home() {
   return (
     <main>
       <IntroImageSection />
+      <MiniGameSection />
       {/* <IntroVideo /> */}
       {/* <Hero /> */}
       {/* <Brands />
