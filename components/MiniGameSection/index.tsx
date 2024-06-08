@@ -1,13 +1,14 @@
-'use client'
-import React from 'react';
+'use client';
+import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from 'react';
 
 const MiniGameSection = () => {
     return (
-        <section id="miniGameSection" className="overflow-hidden pb-20 pt-15 lg:pb-25 xl:pb-30">
+        <section id="miniGameSection" className="overflow-hidden">
             <iframe
                 title='mini-game'
                 src="/surf-game/game.html"
-                className='w-full h-screen border-none'
+                className='w-full h-[100vh] border-none'
                 allowFullScreen
                 loading='lazy'
             />
