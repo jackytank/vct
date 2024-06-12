@@ -6,7 +6,7 @@ const MiniGameSection = () => {
         <section id="miniGameSection" className="overflow-hidden">
             <iframe
                 title='mini-game'
-                src="/game.html"
+                src="/flappy-bird-game.html"
                 className='w-full h-[100vh] border-none'
                 allowFullScreen
                 loading='lazy'
