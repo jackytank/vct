@@ -125,8 +125,8 @@ const SingleBlogPage = async () => {
                 </li>
               </ul>
 
-              {/* <TextToSpeech text={text} /> */}
-              <TestTextToSpeech text={text} />
+              <TextToSpeech text={text} />
+              {/* <TestTextToSpeech text={text} /> */}
 
               <div className="blog-details">
                 <p>

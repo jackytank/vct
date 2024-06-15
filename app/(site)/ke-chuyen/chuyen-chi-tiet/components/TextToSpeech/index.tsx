@@ -1,130 +1,88 @@
 'use client';
-
 import React, { useState, useEffect } from "react";
+import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-icons/ai";
 
 const TextToSpeech = ({ text }) => {
     const [isPaused, setIsPaused] = useState(false);
-    const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
-    const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null);
+    const [utterance, setUtterance] = useState(new SpeechSynthesisUtterance(text));
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
 
     useEffect(() => {
         const synth = window.speechSynthesis;
-        const u = new SpeechSynthesisUtterance(text);
         const voices = synth.getVoices();
-        setUtterance(u);
-        setVoice(voices[0]);
+        console.log(voices);
+        const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
+        if (vnVoice) {
+            utterance.voice = vnVoice;
+        }
+        utterance.pitch = pitch;
+        utterance.rate = rate;
+        utterance.volume = volume;
+        // Set the text in case it changes
+        utterance.text = text;
+
         return () => {
             synth.cancel();
         };
-    }, [text]);
+    }, [text, pitch, rate, volume, utterance]);
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
+        const voices = synth.getVoices();
+        const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
+        if (vnVoice) {
+            utterance.voice = vnVoice;
+        }
+        utterance.pitch = pitch;
+        utterance.rate = rate;
+        utterance.volume = volume;
+        // Set the text in case it changes
+        utterance.text = text;
         if (isPaused) {
             synth.resume();
         } else {
-            if (utterance) {
-                utterance.voice = voice;
-                utterance.pitch = pitch;
-                utterance.rate = rate;
-                utterance.volume = volume;
-                synth.speak(utterance);
-            }
+            synth.speak(utterance);
         }
         setIsPaused(false);
     };
 
     const handlePause = () => {
-        const synth = window.speechSynthesis;
-        synth.pause();
+        window.speechSynthesis.pause();
         setIsPaused(true);
     };
 
     const handleStop = () => {
-        const synth = window.speechSynthesis;
-        synth.cancel();
+        window.speechSynthesis.cancel();
         setIsPaused(false);
     };
 
-    const handleVoiceChange = (event) => {
-        const voices = window.speechSynthesis.getVoices();
-        setVoice(voices.find((v) => v.name === event.target.value) ?? null);
-    };
-
-    const handlePitchChange = (event) => {
-        setPitch(parseFloat(event.target.value));
-    };
-
-    const handleRateChange = (event) => {
-        setRate(parseFloat(event.target.value));
-    };
-
-    const handleVolumeChange = (event) => {
-        setVolume(parseFloat(event.target.value));
-    };
-
     return (
-        <div>
-            <label>
-                <span>Voice:</span>
-                <select value={voice?.name} onChange={handleVoiceChange}>
-                    {window.speechSynthesis.getVoices().map((voice) => (
-                        <option key={voice.name} value={voice.name}>
-                            {voice.name}
-                        </option>
-                    ))}
-                </select>
-            </label>
-
-            <br />
-
-            <label>
-                <span>Pitch:</span>
-                <input
-                    type="range"
-                    min="0.5"
-                    max="2"
-                    step="0.1"
-                    value={pitch}
-                    onChange={handlePitchChange}
-                />
-            </label>
-
-            <br />
-
-            <label>
-                <span>Speed:</span>
-                <input
-                    type="range"
-                    min="0.5"
-                    max="2"
-                    step="0.1"
-                    value={rate}
-                    onChange={handleRateChange}
-                />
-            </label>
-            <br />
-            <label>
-                <span>Volume:</span>
-                <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                />
-            </label>
-
-            <br />
-
-            <button onClick={handlePlay}>{isPaused ? "Resume" : "Play"}</button>
-            <button onClick={handlePause}>Pause</button>
-            <button onClick={handleStop}>Stop</button>
+        <div style={{ margin: "1rem", whiteSpace: "pre-wrap" }}>
+            <div className="flex justify-center gap-3">
+                <button className="flex items-center gap-2 text-lg" onClick={handlePlay}>
+                    <AiFillCaretRight className="text-green-500 text-2xl" />
+                    <span>{isPaused ? "Resume" : "Play"}</span>
+                </button>
+                <button
+                    className="flex items-center gap-2 text-lg"
+                    onClick={handlePause}
+                >
+                    <AiOutlinePauseCircle className="text-gray-500 text-2xl" />
+                    <span>Pause</span>
+                </button>
+                <button
+                    className="flex items-center gap-2 text-lg"
+                    onClick={handleStop}
+                >
+                    <AiOutlineStop className="text-red-500 text-2xl" />
+                    <span>Stop</span>
+                </button>
+            </div>
+            {/* <Text /> */}
         </div>
+
     );
 };
 
