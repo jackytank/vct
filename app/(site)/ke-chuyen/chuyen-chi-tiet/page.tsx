@@ -3,7 +3,6 @@ import SharePost from "@/components/Blog/SharePost";
 import { Metadata } from "next";
 import Image from "next/image";
 import TextToSpeech from "./components/TextToSpeech";
-import TestTextToSpeech from "./components/TextToSpeech/test";
 
 export const metadata: Metadata = {
   title: "Chuyện chi tiêt",
