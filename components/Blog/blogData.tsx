@@ -3,10 +3,10 @@ import { Blog } from "@/types/blog";
 const BlogData: Blog[] = [
   {
     _id: 1,
-    mainImage: "/images/blog/blog-01.png",
-    title: "Free advertising for your online business",
+    mainImage: "/images/blog/aktv.jpg",
+    title: "Cổ tích - Ăn khế trả vàng",
     metadata:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+      "Ngày xưa, có hai anh em nhà kia, sau khi cha mẹ qua đời, người anh chiếm tất cả gia tài, chỉ cho em mỗi một cây khế ở góc vườn. Người em đành nhẫn nhịn, hằng ngày chăm sóc, mong cây sớm ra quả.",
   },
   {
     _id: 2,
