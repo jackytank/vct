@@ -4,7 +4,7 @@ import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-ico
 
 const TextToSpeech = ({ text }) => {
     const [isPaused, setIsPaused] = useState(false);
-    const [utterance, setUtterance] = useState(new SpeechSynthesisUtterance(text));
+    const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
@@ -15,16 +15,16 @@ const TextToSpeech = ({ text }) => {
             return;
         }
         const synth = window.speechSynthesis;
-        const voices = synth.getVoices();
-        const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
-        if (vnVoice) {
-            utterance.voice = vnVoice;
-        }
-        utterance.pitch = pitch;
-        utterance.rate = rate;
-        utterance.volume = volume;
-        // Set the text in case it changes
-        utterance.text = text;
+        // const voices = synth.getVoices();
+        // const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
+        // if (vnVoice) {
+        //     utterance.voice = vnVoice;
+        // }
+        // utterance.pitch = pitch;
+        // utterance.rate = rate;
+        // utterance.volume = volume;
+        // // Set the text in case it changes
+        // utterance.text = text;
 
         return () => {
             synth.cancel();
@@ -43,12 +43,19 @@ const TextToSpeech = ({ text }) => {
         console.log('findVoice', voice);
 
         // Create an utterance object
-        const ut = new SpeechSynthesisUtterance(text);
+        const ut = {
+            voice: voice,
+            pitch: 1,
+            rate: 1,
+            volume: 1,
+            text: text,
+        } as any;
         // Set utterance properties
-        ut.voice = voice;
-        ut.pitch = 1;
-        ut.rate = 1;
-        ut.volume = 1;
+        // ut.voice = voice;
+        // ut.pitch = 1;
+        // ut.rate = 1;
+        // ut.volume = 1;
+        // ut.text = text;
         if (isPaused) {
             synth.resume();
         } else {
