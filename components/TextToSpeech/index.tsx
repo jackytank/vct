@@ -12,10 +12,6 @@ const TextToSpeech = ({ text }) => {
     const [volume, setVolume] = useState(1);
 
     useEffect(() => {
-        if (!(typeof window !== 'undefined' && 'speechSynthesis' in window)) {
-            alert('Text-to-speech not supported.');
-            return;
-        }
         const synth = window.speechSynthesis;
         const u = new SpeechSynthesisUtterance(text);
         const vnVoice = synth.getVoices().filter(function (voice) {
