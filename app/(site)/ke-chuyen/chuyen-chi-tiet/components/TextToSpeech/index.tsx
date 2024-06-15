@@ -4,7 +4,7 @@ import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-ico
 
 const TextToSpeech = ({ text }) => {
     const [isPaused, setIsPaused] = useState(false);
-    const [utterance, setUtterance] = useState(new SpeechSynthesisUtterance(text));
+    const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
@@ -14,6 +14,7 @@ const TextToSpeech = ({ text }) => {
         const voices = synth.getVoices();
         console.log(voices);
         const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
+        if (!utterance) return;
         if (vnVoice) {
             utterance.voice = vnVoice;
         }
@@ -32,6 +33,7 @@ const TextToSpeech = ({ text }) => {
         const synth = window.speechSynthesis;
         const voices = synth.getVoices();
         const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
+        if (!utterance) return;
         if (vnVoice) {
             utterance.voice = vnVoice;
         }
