@@ -4,17 +4,19 @@ import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-ico
 
 const TextToSpeech = ({ text }) => {
     const [isPaused, setIsPaused] = useState(false);
-    const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
+    const [utterance, setUtterance] = useState(new SpeechSynthesisUtterance(text));
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
 
     useEffect(() => {
+        if (!('speechSynthesis' in window)) {
+            console.log('Text-to-speech not supported.');
+            return;
+        }
         const synth = window.speechSynthesis;
         const voices = synth.getVoices();
-        console.log(voices);
         const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
-        if (!utterance) return;
         if (vnVoice) {
             utterance.voice = vnVoice;
         }
@@ -30,22 +32,27 @@ const TextToSpeech = ({ text }) => {
     }, [text, pitch, rate, volume, utterance]);
 
     const handlePlay = () => {
-        const synth = window.speechSynthesis;
-        const voices = synth.getVoices();
-        const vnVoice = voices.find((voice) => voice.lang === 'vi-VN');
-        if (!utterance) return;
-        if (vnVoice) {
-            utterance.voice = vnVoice;
+        if (!('speechSynthesis' in window)) {
+            console.log('Text-to-speech not supported.');
+            return;
         }
-        utterance.pitch = pitch;
-        utterance.rate = rate;
-        utterance.volume = volume;
-        // Set the text in case it changes
-        utterance.text = text;
+        const synth = window.speechSynthesis;
+        const voice = synth.getVoices().filter(function (voice) {
+            return voice.lang === 'vi-VN';
+        })[0];
+        console.log('findVoice', voice);
+
+        // Create an utterance object
+        const ut = new SpeechSynthesisUtterance(text);
+        // Set utterance properties
+        ut.voice = voice;
+        ut.pitch = 1;
+        ut.rate = 1;
+        ut.volume = 1;
         if (isPaused) {
             synth.resume();
         } else {
-            synth.speak(utterance);
+            synth.speak(ut);
         }
         setIsPaused(false);
     };
@@ -84,7 +91,6 @@ const TextToSpeech = ({ text }) => {
             </div>
             {/* <Text /> */}
         </div>
-
     );
 };
 
