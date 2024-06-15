@@ -7,7 +7,6 @@ const TextToSpeech = ({ text }) => {
     const [isPaused, setIsPaused] = useState(false);
     const [utterance, setUtterance] = useState<SpeechSynthesisUtterance | null>(null);
     const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null);
-    const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
@@ -16,15 +15,14 @@ const TextToSpeech = ({ text }) => {
         const synth = window.speechSynthesis;
         const u = new SpeechSynthesisUtterance(text);
         const voices = synth.getVoices();
-
+        console.log(voices);
         setUtterance(u);
         setVoice(voices[0]);
-        setVoices(voices);
 
         return () => {
             synth.cancel();
         };
-    }, []);
+    }, [text]);
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
@@ -85,7 +83,7 @@ const TextToSpeech = ({ text }) => {
                     onChange={handleVoiceChange}
                     className="w-full p-1 border border-gray-300 rounded-md"
                 >
-                    {voices.map((voice) => (
+                    {typeof window !== "undefined" && window.speechSynthesis.getVoices().map((voice) => (
                         <option key={voice.name} value={voice.name}>
                             {voice.name}
                         </option>
