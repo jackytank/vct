@@ -14,20 +14,19 @@ const TextToSpeech = ({ text }) => {
     useEffect(() => {
         const synth = window.speechSynthesis;
         const u = new SpeechSynthesisUtterance(text);
-        const vnVoice = synth.getVoices().filter(function (voice) {
-            return voice.lang === 'vi-VN';
-        })[0];
+        const voices = synth.getVoices();
 
         setUtterance(u);
-        setVoice(vnVoice);
+        setVoice(voices[0]);
 
         return () => {
             synth.cancel();
         };
-    }, []);
+    }, [text]);
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
+
         if (isPaused) {
             synth.resume();
         } else {
@@ -38,21 +37,59 @@ const TextToSpeech = ({ text }) => {
             utterance.volume = volume;
             synth.speak(utterance);
         }
+
         setIsPaused(false);
     };
 
     const handlePause = () => {
-        window.speechSynthesis.pause();
+        const synth = window.speechSynthesis;
+
+        synth.pause();
+
         setIsPaused(true);
     };
 
     const handleStop = () => {
-        window.speechSynthesis.cancel();
+        const synth = window.speechSynthesis;
+
+        synth.cancel();
+
         setIsPaused(false);
     };
 
+    const handleVoiceChange = (event) => {
+        const voices = window.speechSynthesis.getVoices();
+        setVoice(voices.find((v) => v.name === event.target.value) ?? null);
+    };
+
+    const handlePitchChange = (event) => {
+        setPitch(parseFloat(event.target.value));
+    };
+
+    const handleRateChange = (event) => {
+        setRate(parseFloat(event.target.value));
+    };
+
+    const handleVolumeChange = (event) => {
+        setVolume(parseFloat(event.target.value));
+    };
+
     return (
-        <div style={{ margin: "1rem", whiteSpace: "pre-wrap" }}>
+        <div className="my-4">
+            <label className="mb-3">
+                <select
+                    value={voice?.name}
+                    placeholder="Chọn giọng đọc"
+                    onChange={handleVoiceChange}
+                    className="w-full p-1 border border-gray-300 rounded-md"
+                >
+                    {window.speechSynthesis.getVoices().map((voice) => (
+                        <option key={voice.name} value={voice.name}>
+                            {voice.name}
+                        </option>
+                    ))}
+                </select>
+            </label>
             <div className="flex justify-center gap-3">
                 <button className="flex items-center gap-2 text-lg" onClick={handlePlay}>
                     <AiFillCaretRight className="text-green-500 text-2xl" />
