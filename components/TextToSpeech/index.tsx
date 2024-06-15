@@ -28,7 +28,7 @@ const TextToSpeech = ({ text }) => {
         return () => {
             synth.cancel();
         };
-    }, [text]);
+    }, []);
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
