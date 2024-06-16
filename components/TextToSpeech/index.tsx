@@ -1,5 +1,6 @@
 'use client';
 
+import { useVoices } from "@/utils/helper";
 import React, { useState, useEffect } from "react";
 import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-icons/ai";
 
@@ -10,6 +11,7 @@ const TextToSpeech = ({ text }) => {
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
+    const voices = useVoices();
 
     useEffect(() => {
         const synth = window.speechSynthesis;
@@ -83,7 +85,7 @@ const TextToSpeech = ({ text }) => {
                     onChange={handleVoiceChange}
                     className="w-full p-1 border border-gray-300 rounded-md"
                 >
-                    {typeof window !== "undefined" && window.speechSynthesis.getVoices().map((voice) => (
+                    {voices.map((voice) => (
                         <option key={voice.name} value={voice.name}>
                             {voice.name}
                         </option>
