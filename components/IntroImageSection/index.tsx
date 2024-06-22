@@ -16,7 +16,7 @@ const IntroImageSection = () => {
         const miniGameSection = document.getElementById('miniGameSection');
         if (miniGameSection) {
             // Calculate the position to scroll to, accounting for the fixed header height as a percentage of the viewport height
-            const headerOffset = window.innerHeight * 0.1; // 12.5% of the viewport height
+            const headerOffset = window.innerHeight * 0.11; // 12.5% of the viewport height
             const sectionPosition = miniGameSection.offsetTop - headerOffset;
             window.scrollTo({
                 top: sectionPosition,

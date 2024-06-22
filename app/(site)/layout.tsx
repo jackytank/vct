@@ -10,6 +10,7 @@ import "../globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 import ToasterContext from "../context/ToastContext";
+import MouseSparklingStars from "@/components/MouseSparklingStars";
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
           {/* <Lines /> */}
           <Header />
           <ToasterContext />
+          <MouseSparklingStars />
           <div className="border border-y-2">
             {children}
           </div>

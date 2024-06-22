@@ -1,9 +1,10 @@
 import { animated, useSpring } from '@react-spring/web';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const IntroImageAnimation = () => {
     const [isHovered, setIsHovered] = useState(false);
+    const [leaveTimer, setLeaveTimer] = useState<NodeJS.Timeout | null>(null);
     const homepageBgImage = '/images/intro/BG_VCT.png';
     const yellowLeftCloudImage = '/images/intro/CLOUD_YELLOW_LEFT.png';
     const yellowRightCloudImage = '/images/intro/CLOUD_YELLOW_RIGHT.png';
@@ -12,6 +13,21 @@ const IntroImageAnimation = () => {
     const centerHomepageBrandText = '/images/intro/CO_TICH_TYPO.png';
     const starsImage = '/images/intro/STARS.png';
     const slideDistance = 250;
+
+    const handleMouseEnter = () => {
+        if (leaveTimer) {
+            clearTimeout(leaveTimer);
+            setLeaveTimer(null);
+        }
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        const timer = setTimeout(() => {
+            setIsHovered(false);
+        }, 5000); // 5 seconds delay
+        setLeaveTimer(timer);
+    };
 
     const leftImageSpring = useSpring({
         to: {
@@ -30,6 +46,25 @@ const IntroImageAnimation = () => {
         opacity: isHovered ? 1 : 0.5,
         config: { duration: 500 }, // Adjust duration as needed
     });
+
+    // Cleanup on component unmount
+    useEffect(() => {
+        return () => {
+            if (leaveTimer) {
+                clearTimeout(leaveTimer);
+            }
+        };
+    }, [leaveTimer]);
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        if (!isHovered) {
+            timeoutId = setTimeout(() => {
+                setIsHovered(false);
+            }, 3000);
+        }
+        return () => clearTimeout(timeoutId);
+    }, [isHovered]);
 
     return (
         <div className="relative w-auto min-w-full min-h-full max-w-none">
@@ -62,16 +97,16 @@ const IntroImageAnimation = () => {
                     alt="left_yellow_cloud"
                     className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
                     style={leftImageSpring}
-                    onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 />
                 <animated.img
                     src={whiteLeftCloudImage}
                     alt="left_white_cloud"
                     className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
                     style={leftImageSpring}
-                    onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 />
             </div>
             <div>
@@ -80,16 +115,16 @@ const IntroImageAnimation = () => {
                     alt="right_yellow_cloud"
                     className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
                     style={rightImageSpring}
-                    onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 />
                 <animated.img
                     src={whiteRightCloudImage}
                     alt="right_white_cloud"
                     className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
                     style={rightImageSpring}
-                    onMouseEnter={() => setIsHovered(true)}
-                    // onMouseLeave={() => setIsHovered(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 />
             </div>
         </div>

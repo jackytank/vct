@@ -2,9 +2,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+
+const LogoComponent = () => (
+  <a href="/">
+    <Image
+      src="/images/logo/logo-thien-dang.png"
+      alt="logo"
+      width={81}
+      height={101}
+      className="hidden w-full dark:block"
+    />
+    <Image
+      src="/images/logo/logo-thien-dang.png"
+      alt="logo"
+      // width={122}
+      // height={152}
+      width={81}
+      height={101}
+      className="w-full dark:hidden"
+    />
+  </a>
+);
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
@@ -12,6 +34,10 @@ const Header = () => {
   const [stickyMenu, setStickyMenu] = useState(false);
 
   const pathUrl = usePathname();
+
+  // Split menuData into two parts
+  const leftMenuData = menuData.slice(0, 3);
+  const rightMenuData = menuData.slice(3);
 
   // Sticky menu
   const handleStickyMenu = () => {
@@ -37,23 +63,7 @@ const Header = () => {
     >
       <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
         <div className="flex w-full items-center justify-between xl:w-1/4">
-          {/* <a href="/">
-            <Image
-              src="/images/logo/logo-thien-dang.png"
-              alt="logo"
-              width={122}
-              height={152}
-              className="hidden w-full dark:block"
-            />
-            <Image
-              src="/images/logo/logo-thien-dang.png"
-              alt="logo"
-              width={122}
-              height={152}
-              className="w-full dark:hidden"
-            />
-          </a> */}
-
+          {/* <LogoComponent /> */}
           {/* <!-- Hamburger Toggle BTN --> */}
           <button
             aria-label="hamburger Toggler"
