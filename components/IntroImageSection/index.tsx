@@ -16,7 +16,7 @@ const IntroImageSection = () => {
         const miniGameSection = document.getElementById('miniGameSection');
         if (miniGameSection) {
             // Calculate the position to scroll to, accounting for the fixed header height as a percentage of the viewport height
-            const headerOffset = window.innerHeight * 0.16; // 12.5% of the viewport height
+            const headerOffset = window.innerHeight * 0.1; // 12.5% of the viewport height
             const sectionPosition = miniGameSection.offsetTop - headerOffset;
             window.scrollTo({
                 top: sectionPosition,
@@ -54,13 +54,13 @@ const IntroImageSection = () => {
                 {/* <IntroCarousel /> */}
                 <IntroImageAnimation />
             </motion.div>
-            <div className="absolute bottom-10 left-2/4 z-50 -translate-x-2/4">
+            <div className="absolute bottom-40 left-2/4 z-50 -translate-x-2/4">
                 <Link href="#miniGameSection" onClick={handleScrollToSection}>
                     <Image
                         src={scrollIcon}
                         alt="Scroll Down"
-                        height={76}
-                        width={76}
+                        height={50}
+                        width={50}
                         className="mx-auto cursor-pointer"
                     />
                 </Link>
