@@ -33,18 +33,18 @@ const IntroImageAnimation = () => {
         to: {
             transform: isHovered ? `translateX(-${slideDistance}px)` : 'translateX(0px)',
         },
-        config: { duration: 1500 }, // Adjust duration as needed
+        config: { duration: 3500 }, // Adjust duration as needed
     });
 
     const rightImageSpring = useSpring({
         to: {
             transform: isHovered ? `translateX(${slideDistance}px)` : 'translateX(0px)',
         },
-        config: { duration: 1500 }, // Adjust duration as needed
+        config: { duration: 3500 }, // Adjust duration as needed
     });
     const centerTextSpring = useSpring({
         opacity: isHovered ? 1 : 0.5,
-        config: { duration: 500 }, // Adjust duration as needed
+        config: { duration: 1000 }, // Adjust duration as needed
     });
 
     // Cleanup on component unmount
