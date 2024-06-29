@@ -43,6 +43,202 @@ const BlogData: Blog[] = [
     metadata:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
   },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
+  {
+    _id: 2,
+    mainImage: "/images/blog/blog-01.png",
+    title: "Tips to quickly improve your coding speed.",
+    metadata:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit convallis tortor.",
+  },
 ];
 
 export default BlogData;
