@@ -1,5 +1,5 @@
-import { Button } from "@/components/button";
-import { PaginationProps } from "@/lib/types";
+import { PaginationProps } from "@/types/notion-type";
+import { Button } from "@material-tailwind/react";
 import Link from "next/link";
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
@@ -7,7 +7,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
     <div className="flex flex-row space-x-5 items-center justify-center">
       {currentPage > 1 && (
         <Link href={`/article?page=${currentPage - 1}`}>
-          <Button>
+          <Button variant="outlined" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <span>&larr; Previous</span>
           </Button>
         </Link>
@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
 
       {currentPage < totalPages && (
         <Link href={`/article?page=${currentPage + 1}`}>
-          <Button>
+          <Button placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <span>Next &rarr;</span>
           </Button>
         </Link>

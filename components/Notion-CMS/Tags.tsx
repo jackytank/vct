@@ -16,7 +16,7 @@ const Tags = ({ tagFrequencyMap }: { tagFrequencyMap: TagFrequencyMap; }) => {
 
         return (
           <Link href={selected ? "/search" : `/tag/${name}`} key={index}>
-            <Button className={selected ? "bg-gray-500" : ""}>
+            <Button className={selected ? "bg-gray-500" : ""} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               {`${name} (${number})`}
             </Button>
           </Link>

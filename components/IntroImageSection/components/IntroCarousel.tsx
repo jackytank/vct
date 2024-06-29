@@ -5,6 +5,7 @@ import React from 'react';
 const IntroCarousel = () => {
     return (
         <Carousel
+
             loop={true}
             autoplay={true}
             autoplayDelay={3000}
@@ -16,18 +17,18 @@ const IntroCarousel = () => {
                     {new Array(length).fill("").map((_, i) => (
                         <span
                             key={i}
-                            className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                                }`}
-                            onClick={() => setActiveIndex(i)}
-                        />
+                            className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"}`}
+                            onClick={() => setActiveIndex(i)} />
                     ))}
                 </div>
             )}
             transition={{
                 duration: 1,
                 delay: 0.1,
-
             }}
+            placeholder={''}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
         >
             <img
                 src="/images/intro/img1.jpg"

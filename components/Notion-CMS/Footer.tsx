@@ -1,4 +1,4 @@
-import { footerNavigation } from "@/site";
+import { footerNavigation } from "@/utils/site";
 import Link from "next/link";
 
 export default function Footer() {

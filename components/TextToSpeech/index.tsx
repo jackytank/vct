@@ -1,6 +1,6 @@
 'use client';
 
-import { useVoices } from "@/utils/helper";
+import { useVoices } from "@/utils/text-to-speech-helper";
 import React, { useState, useEffect } from "react";
 import { AiFillCaretRight, AiOutlinePauseCircle, AiOutlineStop } from "react-icons/ai";
 
@@ -81,7 +81,6 @@ const TextToSpeech = ({ text }) => {
             <label className="mb-3">
                 <select
                     value={voice?.name}
-                    placeholder="Chọn giọng đọc"
                     onChange={handleVoiceChange}
                     className="w-full p-1 border border-gray-300 rounded-md"
                 >

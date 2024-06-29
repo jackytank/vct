@@ -1,12 +1,11 @@
-import { Article } from '@/lib/types';
+import { Article } from '@/types/notion-type';
 import ArticleCard from './ArticleCard';
 
 type Props = {
   articles: Article[];
 };
 
-
-export default function ArticleList({ articles }: Props) {
+export default function ArticleList({ articles }: Readonly<Props>) {
   // console.log(articles)
   return (
     <div className="grid gap-10 lg:gap-12 sm:grid-cols-2">
