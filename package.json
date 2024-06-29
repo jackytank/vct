@@ -33,6 +33,7 @@
     "react-icons": "^5.2.1",
     "react-notion": "^0.10.0",
     "react-notion-x": "^6.16.0",
+    "react-share": "^5.1.0",
     "react-text-to-speech": "^0.15.3",
     "sharp": "^0.33.4",
     "slugify": "^1.6.6",
