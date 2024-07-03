@@ -26,7 +26,6 @@ const IntroImageSection = () => {
     };
 
     useEffect(() => {
-        console.log(theme);
         setScrollIcon(theme === 'dark' ? '/images/icon/down-dark.png' : '/images/icon/down-light.png');
     }, [theme]);
 

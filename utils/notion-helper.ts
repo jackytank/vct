@@ -1,7 +1,7 @@
 import { Article, TagFrequencyMap } from "@/types/notion-type";
 import { Client } from "@notionhq/client";
 import axios, { AxiosResponse } from "axios";
-import React from "react";
+import React, { cache } from "react";
 import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +9,6 @@ import { twMerge } from "tailwind-merge";
 export const notion = new Client({
     auth: process.env.NOTION_API_KEY,
 });
-
 
 // ------------------------------ version 1 - Basic -> BEGIN ------------------------------
 export const fetchPages = React.cache(() => {
@@ -38,7 +37,7 @@ export const fetchPageBySlug = React.cache((slug: string) => {
         .then((res) => res.results[0] as PageObjectResponse | undefined);
 });
 
-export const fetchPageBlocks = React.cache((pageId: string) => {
+export const getPageContent = React.cache((pageId: string) => {
     return notion.blocks.children
         .list({ block_id: pageId })
         .then((res) => res.results as BlockObjectResponse[]);
@@ -47,10 +46,10 @@ export const fetchPageBlocks = React.cache((pageId: string) => {
 // ------------------------------ version 1 - Basic -> END ------------------------------
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------ version 2 - Professional -> BEGIN ------------------------------
-export const getAllPosts = async (): Promise<Article[]> => {
-    const databaseId = process.env.NOTION_DATABASE_ID!;
-    const response = await notion.databases.query({
-        database_id: databaseId,
+
+export const getNotionPages = cache(() => {
+    return notion.databases.query({
+        database_id: process.env.NOTION_DATABASE_ID!,
         filter: {
             and: [
                 {
@@ -65,7 +64,6 @@ export const getAllPosts = async (): Promise<Article[]> => {
                         equals: "Post",
                     },
                 },
-                // Add more conditions if needed
             ],
         },
         sorts: [
@@ -76,10 +74,12 @@ export const getAllPosts = async (): Promise<Article[]> => {
         ],
     });
 
+});
+export const getAllPosts = async (): Promise<Article[]> => {
+    const response = await getNotionPages();
     const publishedPosts: Article[] = response.results.map((e) =>
         convertToPost(e)
     );
-
     return publishedPosts;
 };
 
@@ -102,22 +102,24 @@ export default function getLocalizedDate(date: string): string {
     });
 }
 
-export const convertToPost = (item: any): Article => ({
-    id: item.id,
-    title: item.properties.title.title[0].text.content,
-    date: item.properties.date.date.start,
-    type: item.properties.type.select.name,
-    slug: item.properties.slug.rich_text[0].text.content,
-    status: item.properties.status.select.name,
-    tags: item.properties.tags.multi_select.map(
-        (tag: { name: string; }) => tag.name
-    ),
-    summary: item.properties.summary.rich_text.map(
-        (textObj: { text: { content: string; }; }) => textObj.text.content
-    ),
-    coverImage: item.properties?.coverImage?.files[0]?.file?.url,
-    author: item.properties.author.created_by.name
-});
+export const convertToPost = (item: any): Article => {
+    return {
+        id: item.id,
+        title: item.properties.title.title[0].text.content,
+        date: item.properties.date.date.start,
+        type: item.properties.type.select.name,
+        slug: item.properties.slug.rich_text[0].text.content,
+        status: item.properties.status.select.name,
+        tags: item.properties.tags.multi_select.map(
+            (tag: { name: string; }) => tag.name
+        ),
+        summary: item.properties.summary.rich_text.map(
+            (textObj: { text: { content: string; }; }) => textObj.text.content
+        ),
+        coverImage: item.properties?.coverImage?.files[0]?.file?.url,
+        author: item.properties.author.created_by.name
+    };
+};
 
 export const calculateTagFrequency = async ({
     publishedPosts,
@@ -140,7 +142,39 @@ export const calculateTagFrequency = async ({
     return tagFrequencyMap;
 };
 
-export const getTagFilteredPosts = async ({
+const getFilteredPagesByTagSlug = cache((tags: string[], slug: string, databaseId: string) => {
+    return notion.databases.query({
+        database_id: databaseId,
+        filter: {
+            and: [
+                {
+                    or: tags.map((tag) => ({
+                        property: "tags",
+                        multi_select: {
+                            contains: tag,
+                        },
+                    })),
+                },
+                {
+                    // Replace "unique_id" with the actual property name
+                    property: "slug",
+                    rich_text: {
+                        does_not_equal: slug,
+                    },
+                },
+            ],
+        },
+        sorts: [
+            {
+                property: "date",
+                direction: "ascending",
+            },
+        ],
+        page_size: 2, // Limit to 2 articles
+    });
+});
+
+export const getTagFilteredPostsByTagsAndSlug = async ({
     tags,
     slug,
 }: {
@@ -149,35 +183,44 @@ export const getTagFilteredPosts = async ({
 }): Promise<Article[]> => {
     try {
         const databaseId = process.env.NOTION_DATABASE_ID!;
-        const response = await notion.databases.query({
-            database_id: databaseId,
-            filter: {
-                and: [
-                    {
-                        or: tags.map((tag) => ({
-                            property: "tags",
-                            multi_select: {
-                                contains: tag,
-                            },
-                        })),
-                    },
-                    {
-                        // Replace "unique_id" with the actual property name
-                        property: "slug",
-                        rich_text: {
-                            does_not_equal: slug,
-                        },
-                    },
-                ],
+        const response = await getFilteredPagesByTagSlug(tags, slug, databaseId);
+        const tagFilteredPosts: Article[] = response.results.map((e) =>
+            convertToPost(e)
+        );
+        return tagFilteredPosts;
+    } catch (error) {
+        console.error("Error fetching tag-filtered posts:", error);
+        throw error;
+    }
+};
+
+const getPageTagBySlug = cache((slug: string, databaseId: string) => {
+    return notion.databases.query({
+        database_id: databaseId,
+        filter: {
+            property: "tags",
+            multi_select: {
+                contains: `${slug}`,
             },
-            sorts: [
-                {
-                    property: "date",
-                    direction: "ascending",
-                },
-            ],
-            page_size: 2, // Limit to 2 articles
-        });
+        },
+        sorts: [
+            {
+                property: "date",
+                direction: "ascending",
+            },
+        ],
+    });
+});
+
+
+export const getTagFilteredPostsBySlug = async ({
+    slug,
+}: {
+    slug: string;
+}): Promise<Article[]> => {
+    try {
+        const databaseId = process.env.NOTION_DATABASE_ID!;
+        const response = await getPageTagBySlug(slug, databaseId);
 
         const tagFilteredPosts: Article[] = response.results.map((e) =>
             convertToPost(e)
@@ -185,10 +228,12 @@ export const getTagFilteredPosts = async ({
 
         return tagFilteredPosts;
     } catch (error) {
+        // Handle the error, log it, or throw a more specific exception if needed.
         console.error("Error fetching tag-filtered posts:", error);
         throw error;
     }
 };
+
 
 export function FormatDate(inputDate: string): string {
     // Convert input date string to a Date object
