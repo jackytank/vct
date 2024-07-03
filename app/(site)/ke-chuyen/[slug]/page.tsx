@@ -40,7 +40,7 @@ export default async function Page({
     const html = await notionRenderer.render(...content);
 
     return (
-        <div className="pb-20 pt-35 lg:pb-25 lg:pt-45 xl:pb-30 xl:pt-50 space-y-5 max-w-7xl m-auto min-h-screen">
+        <div className="py-20 lg:py-25 xl:py-30 space-y-5 max-w-7xl m-auto min-h-screen">
             <img alt="cannot-load" className="object-cover w-full h-52 xl:rounded-[20px] aspect-video" src={postDetails.coverImage} />
 
             <div>

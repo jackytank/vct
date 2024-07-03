@@ -10,7 +10,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
   const tagFrequencyMap = await calculateTagFrequency({ publishedPosts });
 
   return (
-    <div className="max-w-5xl m-auto p-4 min-h-screen">
+    <div className="py-20 lg:py-25 xl:py-30 max-w-5xl m-auto p-4 min-h-screen">
       <Search
         publishedPosts={tagFilteredPosts}
         tagFrequencyMap={tagFrequencyMap}
