@@ -13,7 +13,8 @@ var playend = false, playdata = [];
 var wxData;
 
 var clearCanvas = function(){
-	ctx.fillStyle = '#4EC0CA';
+	// ctx.fillStyle = '#4EC0CA';
+	ctx.fillStyle = '#81FEFE';
 	ctx.fillRect(0, 0, width, height);
 }
 
@@ -109,7 +110,7 @@ var initCanvas = function(){
 
 var deathAnimation = function(){
 	if(splash){
-		ctx.drawImage(splash, width / 2 - 94, height / 2 - 54);
+		ctx.drawImage(splash, width / 2 - 300, height / 2 - 250);
 		splash = undefined;
 	}
 	else {
@@ -120,7 +121,7 @@ var deathAnimation = function(){
             //alert("您在 " + ["easy", "normal", "hard"][mode] + " 模式中取得 " + score + " 分，右上角分享成绩到朋友圈吧~");
         }
     }
-	ctx.drawImage(ready, width / 2 - 57, height / 2 + 10);
+	ctx.drawImage(ready, width / 2 - 57, height / 2 + 35); // TODO: change here for replay margin top
 	maxScore = Math.max(maxScore, score);
 }
 
