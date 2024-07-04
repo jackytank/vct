@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Có Lỗi",
-  description: "Trang lỗi của Thiên Đăng - Vườn Cổ Tích",
+  description: "Trang lỗi của Vườn Cổ Tích - Vườn Cổ Tích",
   // other metadata
 };
 

@@ -28,7 +28,7 @@ const Footer = () => {
               viewport={{ once: true }}
               className="animate_top w-1/2 lg:w-1/4"
             >
-              <a href="index.html" className="relative">
+              {/* <a href="index.html" className="relative">
                 <Image
                   width={110}
                   height={80}
@@ -43,7 +43,7 @@ const Footer = () => {
                   alt="Logo"
                   className="hidden dark:block"
                 />
-              </a>
+              </a> */}
 
               <p className="mb-10 mt-5">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -293,7 +293,7 @@ const Footer = () => {
             className="animate_top"
           >
             <p>
-              &copy; {new Date().getFullYear()} Thien Dang. All rights reserved
+              &copy; {new Date().getFullYear()} Vườn Cổ Tích. All rights reserved
             </p>
           </motion.div>
 

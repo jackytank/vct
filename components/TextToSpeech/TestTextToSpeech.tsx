@@ -23,15 +23,15 @@ export default function TestTextToSpeech({ text }: Readonly<TestTextToSpeechProp
             <div className="flex justify-center gap-3">
                 <button className="flex items-center gap-2 text-lg" disabled={speechStatus === "started"} onClick={start}>
                     <AiFillCaretRight className="text-green-500 text-2xl" />
-                    <span>Start</span>
+                    Đọc
                 </button>
                 <button className="flex items-center gap-2 text-lg" disabled={speechStatus === "paused"} onClick={pause}>
                     <AiOutlinePauseCircle className="text-gray-500 text-2xl" />
-                    <span>Pause</span>
+                    Dừng
                 </button>
                 <button className="flex items-center gap-2 text-lg" disabled={speechStatus === "stopped"} onClick={stop}>
                     <AiOutlineStop className="text-red-500 text-2xl" />
-                    <span>Stop</span>
+                    Dừng hẳn
                 </button>
             </div>
             {/* <Text /> */}

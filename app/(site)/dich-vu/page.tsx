@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
     title: "Dịch Vụ",
-    description: "Trang dịch vụ của Thiên Đăng - Vườn Cổ Tích",
+    description: "Trang dịch vụ của Vườn Cổ Tích - Vườn Cổ Tích",
 };
 
 const ServicesPage = () => {
