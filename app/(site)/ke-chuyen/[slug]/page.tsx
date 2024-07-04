@@ -2,8 +2,10 @@ import Container from "@/components/Notion-CMS/Container";
 import ArticleList from "@/components/Notion-CMS/Feed";
 import SocialshareButtons from "@/components/Notion-CMS/SocialshareButtons";
 import TopScrollButton from "@/components/Notion-CMS/TopScrollButton";
+import TestTextToSpeech from "@/components/TextToSpeech/TestTextToSpeech";
 import { Article } from "@/types/notion-type";
 import getLocalizedDate, { notion, convertToPost, getAllPosts, getTagFilteredPostsByTagsAndSlug, getPageContent } from "@/utils/notion-helper";
+import { toSpeechUsingGoogleCloud } from "@/utils/text-to-speech-helper";
 import bookmarkPlugin from "@notion-render/bookmark-plugin";
 import { NotionRenderer } from "@notion-render/client";
 import hljsPlugin from "@notion-render/hljs-plugin";
@@ -61,6 +63,7 @@ export default async function Page({
                         />
                     </div>
                 </div>
+                <TestTextToSpeech text={html} />
                 <div className="max-w-4xl px-6 mx-auto mb-24 space-y-8 md:px-8 pt-4 border-t mt-4" dangerouslySetInnerHTML={{ __html: html }}>
                 </div>
                 <div className="py-12 border-t">
