@@ -5,7 +5,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
     title: "Hậu Trường",
-    description: "Trang hậu trường của Thiên Đăng - Vườn Cổ Tích",
+    description: "Trang hậu trường của Vườn Cổ Tích - Vườn Cổ Tích",
 };
 
 const BackstagePage = async () => {
@@ -17,7 +17,7 @@ const BackstagePage = async () => {
                         <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl dark:text-white">Kho ảnh hậu trường</h2>
 
                         <p className="hidden max-w-screen-sm text-gray-500 dark:text-gray-300 md:block">
-                            Những hình ảnh hậu trường của Thiên Đăng - Vườn Cổ Tích
+                            Những hình ảnh hậu trường của Vườn Cổ Tích - Vườn Cổ Tích
                         </p>
                     </div>
 

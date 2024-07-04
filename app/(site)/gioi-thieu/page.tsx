@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Giới thiệu",
-  description: "Trang giới thiệu của Thiên Đăng - Vườn Cổ Tích",
+  description: "Trang giới thiệu của Vườn Cổ Tích - Vườn Cổ Tích",
   // other metadata
 };
 
@@ -22,7 +22,7 @@ export default function DocsPage() {
 
           <div className="w-full px-4 lg:w-3/4">
             <div className="blog-details blog-details-docs shadow-three dark:bg-gray-dark rounded-sm bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]">
-              <h1>Chào mừng đến với Thiên Đăng - Vườn Cổ Tích</h1>
+              <h1>Chào mừng đến với Vườn Cổ Tích - Vườn Cổ Tích</h1>
 
               <p className="text-body-color dark:text-body-color-dark text-base">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo, minus perspiciatis, quod repellat impedit fuga neque vitae quis voluptatibus itaque praesentium, molestiae at. Quasi odio tenetur nemo, ratione mollitia tempore.

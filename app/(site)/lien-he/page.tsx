@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Liên Hệ",
-  description: "Trang liên hệ của Thiên Đăng - Vườn Cổ Tích",
+  description: "Trang liên hệ của Vườn Cổ Tích - Vườn Cổ Tích",
   // other metadata
 };
 

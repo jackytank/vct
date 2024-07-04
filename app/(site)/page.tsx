@@ -17,8 +17,8 @@ import IntroImageSection from "@/components/IntroImageSection";
 import MiniGameSection from "@/components/MiniGameSection";
 
 export const metadata: Metadata = {
-  title: "Thiên Đăng",
-  description: "Trang chủ của Thiên Đăng - Vườn Cổ Tích",
+  title: "Vườn Cổ Tích",
+  description: "Trang chủ của Vườn Cổ Tích - Vườn Cổ Tích",
   // other metadata
 };
 
