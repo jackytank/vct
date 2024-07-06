@@ -14,7 +14,7 @@ var wxData;
 
 var clearCanvas = function(){
 	// ctx.fillStyle = '#4EC0CA';
-	ctx.fillStyle = '#81FEFE';
+	ctx.fillStyle = '#A0FEFA';
 	ctx.fillRect(0, 0, width, height);
 }
 
