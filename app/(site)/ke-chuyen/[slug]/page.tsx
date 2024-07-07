@@ -2,14 +2,15 @@ import Container from "@/components/Notion-CMS/Container";
 import ArticleList from "@/components/Notion-CMS/Feed";
 import SocialshareButtons from "@/components/Notion-CMS/SocialshareButtons";
 import TopScrollButton from "@/components/Notion-CMS/TopScrollButton";
-import TestTextToSpeech from "@/components/TextToSpeech/TestTextToSpeech";
+import AudioPlayer from "@/components/TextToSpeech/AudioPlayer";
 import { Article } from "@/types/notion-type";
+import { fetchTTS } from "@/utils/helper";
 import getLocalizedDate, { notion, convertToPost, getAllPosts, getTagFilteredPostsByTagsAndSlug, getPageContent } from "@/utils/notion-helper";
-import { toSpeechUsingGoogleCloud } from "@/utils/text-to-speech-helper";
 import bookmarkPlugin from "@notion-render/bookmark-plugin";
 import { NotionRenderer } from "@notion-render/client";
 import hljsPlugin from "@notion-render/hljs-plugin";
 import Link from "next/link";
+
 
 export default async function Page({
     searchParams,
@@ -40,6 +41,14 @@ export default async function Page({
     notionRenderer.use(hljsPlugin({}));
     notionRenderer.use(bookmarkPlugin(undefined));
     const html = await notionRenderer.render(...content);
+    const mp3Url = await fetchTTS({
+        text: `Đây là giọng đọc AI miễn phí của FPT.ai, và sau đây là câu chuyện: ${postDetails.title}. ${html}`,
+    });
+    if (mp3Url) {
+        console.log('MP3 URL:', mp3Url);
+    } else {
+        console.log('Error fetching TTS data.');
+    }
 
     return (
         <div className="py-20 lg:py-25 xl:py-30 space-y-5 max-w-7xl m-auto min-h-screen">
@@ -63,7 +72,8 @@ export default async function Page({
                         />
                     </div>
                 </div>
-                <TestTextToSpeech text={html} />
+                {/* <TestTextToSpeech text={html} /> */}
+                {mp3Url && <AudioPlayer audioUrl={mp3Url} />}
                 <div className="max-w-4xl px-6 mx-auto mb-24 space-y-8 md:px-8 pt-4 border-t mt-4" dangerouslySetInnerHTML={{ __html: html }}>
                 </div>
                 <div className="py-12 border-t">
@@ -84,3 +94,4 @@ export default async function Page({
         </div>
     );
 }
+
