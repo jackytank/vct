@@ -1,28 +1,28 @@
-var canvas, ctx;
-var width, height, birdPos;
-var sky, land, bird, pipe, pipeUp, pipeDown, scoreBoard, ready, splash;
-var dist, birdY, birdF, birdN, birdV;
-var animation, death, deathAnim;
-var pipes = [], pipesDir = [], pipeSt, pipeNumber;
-var score, maxScore;
-var dropSpeed;
-var flashlight_switch = false, hidden_switch = false;
-var mode, delta;
-var wechat = false;
-var playend = false, playdata = [];
-var wxData;
+let canvas, ctx;
+let width, height, birdPos;
+let sky, land, bird, pipe, pipeUp, pipeDown, scoreBoard, ready, splash;
+let dist, birdY, birdF, birdN, birdV;
+let animation, death, deathAnim;
+let pipes = [], pipesDir = [], pipeSt, pipeNumber;
+let score, maxScore;
+let dropSpeed;
+let flashlight_switch = false, hidden_switch = false;
+let mode, delta;
+let wechat = false;
+let playend = false, playdata = [];
+let wxData;
 
-var clearCanvas = function(){
+let clearCanvas = function () {
 	// ctx.fillStyle = '#4EC0CA';
 	ctx.fillStyle = '#A0FEFA';
 	ctx.fillRect(0, 0, width, height);
-}
+};
 
-var loadImages = function(){
-	var imgNumber = 9, imgComplete = 0;
-	var onImgLoad = function(){
+let loadImages = function () {
+	let imgNumber = 9, imgComplete = 0;
+	let onImgLoad = function () {
 		imgComplete++;
-		if(imgComplete == imgNumber){
+		if (imgComplete == imgNumber) {
 			death = 1;
 			dist = 0;
 			birdY = (height - 112) / 2;
@@ -35,169 +35,174 @@ var loadImages = function(){
 			pipeNumber = 10;
 			pipes = [];
 			pipesDir = [];
-			for(var i = 0; i < 10; ++i){
+			for (let i = 0; i < 10; ++i) {
 				pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
 				pipesDir.push((Math.random() > 0.5));
 			}
 			drawCanvas();
 		}
-	}
+	};
 
 	sky = new Image();
 	sky.src = 'images/sky.png';
 	sky.onload = onImgLoad;
-	
+
 	land = new Image();
 	land.src = 'images/land.png';
 	land.onload = onImgLoad;
-	
+
 	bird = new Image();
 	bird.src = 'images/bird.png';
 	bird.onload = onImgLoad;
-	
+
 	pipe = new Image();
 	pipe.src = 'images/pipe.png';
 	pipe.onload = onImgLoad;
-	
+
 	pipeUp = new Image();
 	pipeUp.src = 'images/pipe-up.png';
 	pipeUp.onload = onImgLoad;
-	
+
 	pipeDown = new Image();
 	pipeDown.src = 'images/pipe-down.png';
 	pipeDown.onload = onImgLoad;
-	
+
 	scoreBoard = new Image();
 	scoreBoard.src = 'images/scoreboard.png';
 	scoreBoard.onload = onImgLoad;
-	
+
 	ready = new Image();
 	ready.src = 'images/replay.png';
 	ready.onload = onImgLoad;
-	
+
 	splash = new Image();
 	splash.src = 'images/splash.png';
 	splash.onload = onImgLoad;
+};
+
+function is_touch_device() {
+	try {
+		document.createEvent("TouchEvent");
+		return true;
+	} catch (e) {
+		return false;
+	}
 }
 
-function is_touch_device() {  
-  try {  
-    document.createEvent("TouchEvent");  
-    return true;  
-  } catch (e) {  
-    return false;  
-  }  
-}
-
-var initCanvas = function(){
+let initCanvas = function () {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
 	canvas.width = width = window.innerWidth;
 	canvas.height = height = window.innerHeight;
-	if(is_touch_device()){
-		canvas.addEventListener("touchend", function(e) { e.preventDefault(); }, false);
-        canvas.addEventListener("touchstart", function(e) {
-	        	jump();
-            e.preventDefault();
-        }, false);
+	if (is_touch_device()) {
+		canvas.addEventListener("touchend", function (e) { e.preventDefault(); }, false);
+		canvas.addEventListener("touchstart", function (e) {
+			jump();
+			e.preventDefault();
+		}, false);
 	}
 	else
 		canvas.onmousedown = jump;
 	window.onkeydown = jump;
 	FastClick.attach(canvas);
 	loadImages();
-}
+};
 
-var deathAnimation = function(){
-	if(splash){
+let deathAnimation = function () {
+	if (splash) {
 		ctx.drawImage(splash, width / 2 - 300, height / 2 - 250);
 		splash = undefined;
 	}
 	else {
-        ctx.drawImage(scoreBoard, width / 2 - 118, height / 2 - 54);
-        playend = true;
-        playdata = [mode, score];
-        if(window.window.WeixinApi && window.WeixinJSBridge) {
-            //alert("您在 " + ["easy", "normal", "hard"][mode] + " 模式中取得 " + score + " 分，右上角分享成绩到朋友圈吧~");
-        }
-    }
+		ctx.drawImage(scoreBoard, width / 2 - 118, height / 2 - 54);
+		playend = true;
+		playdata = [mode, score];
+		if (window.window.WeixinApi && window.WeixinJSBridge) {
+			//alert("您在 " + ["easy", "normal", "hard"][mode] + " 模式中取得 " + score + " 分，右上角分享成绩到朋友圈吧~");
+		}
+	}
 	ctx.drawImage(ready, width / 2 - 57, height / 2 + 35); // TODO: change here for replay margin top
 	maxScore = Math.max(maxScore, score);
-}
+};
 
-var drawSky = function(){
-	var totWidth = 0;
-	while(totWidth < width){
+let drawSky = function () {
+	let totWidth = 0;
+	while (totWidth < width) {
 		ctx.drawImage(sky, totWidth, height - 221);
 		totWidth += sky.width;
 	}
-}
+};
 
-var drawLand = function(){
-	var totWidth = -dist;
-	while(totWidth < width){
+let drawLand = function () {
+	let totWidth = -dist;
+	while (totWidth < width) {
 		ctx.drawImage(land, totWidth, height - 112);
 		totWidth += land.width;
 	}
 	dist = dist + 2;
-	var tmp = Math.floor(dist - width * 0.65) % 220;
-	if(dist >= width * 0.65 && Math.abs(tmp) <= 1){
+	let tmp = Math.floor(dist - width * 0.65) % 220;
+	if (dist >= width * 0.65 && Math.abs(tmp) <= 1) {
 		score++;
 	}
-}
+};
 
-var drawPipe = function(x, y){
+let drawPipe = function (x, y) {
 	ctx.drawImage(pipe, x, 0, pipe.width, y);
 	ctx.drawImage(pipeDown, x, y);
 	ctx.drawImage(pipe, x, y + 168 + delta, pipe.width, height - 112);
 	ctx.drawImage(pipeUp, x, y + 144 + delta);
-	if(x < birdPos + 32 && x + 50 > birdPos && (birdY < y + 22 || birdY + 22 > y + 144 + delta)){
+	if (x < birdPos + 32 && x + 50 > birdPos && (birdY < y + 22 || birdY + 22 > y + 144 + delta)) {
 		clearInterval(animation);
 		death = 1;
 	}
-	else if(x + 40 < 0){
+	else if (x + 40 < 0) {
 		pipeSt++;
 		pipeNumber++;
 		pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
 		pipesDir.push((Math.random() > 0.5));
 	}
-	
-}
 
-var drawBird = function(){
-//	ctx.translate(width * 0.35 + 17, birdY + 12);
-//	var deg = -Math.atan(birdV / 2) / 3.14159;
-//	ctx.rotate(deg);
-	ctx.drawImage(bird, 0, birdN * 24, bird.width, bird.height / 4, birdPos, birdY, bird.width, bird.height / 4);
-//	ctx.rotate(-deg);
-//	ctx.translate(-width * 0.35 - 17, -birdY - 12);
+};
+
+let drawBird = function () {
+	const numOfFrames = 9; // Number of frames in the sprite sheet
+	let birdHeight = (bird.height / numOfFrames); // Divide the total height by 9 to get the height of each bird
+	let birdWidth = bird.width; // Width of the bird is the same as the sprite sheet
+
+	// Calculate the y position of the bird frame in the sprite sheet
+	let birdFrameY = birdN * birdHeight;
+
+	ctx.drawImage(bird, 0, birdFrameY, birdWidth, birdHeight, birdPos, birdY, birdWidth, birdHeight);
+
 	birdF = (birdF + 1) % 6;
-	if(birdF % 6 == 0)
-		birdN = (birdN + 1) % 4;
+	if (birdF % 6 == 0)
+		birdN = (birdN + 1) % numOfFrames; // Update to 9 for the new sprite sheet
+
 	birdY -= birdV;
 	birdV -= dropSpeed;
-	if(birdY + 138 > height){
+	if (birdY + birdHeight > height) {
 		clearInterval(animation);
 		death = 1;
 	}
-	if(death)
+	if (death)
 		deathAnimation();
-}
+};
 
-var drawScore = function(){
+
+let drawScore = function () {
 	ctx.font = '20px "Press Start 2P"';
 	ctx.lineWidth = 5;
-    ctx.strokeStyle = '#fff';
+	ctx.strokeStyle = '#fff';
 	ctx.fillStyle = '#000';
-	var txt = "" + score;
+	let txt = "" + score;
 	ctx.strokeText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
 	ctx.fillText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
-}
+};
 
-var drawShadow = function() {
-	var left_shadow = "linear, " + ((width * 0.35 - 170) / width * 100.) + "% 0, " + ((width * 0.35 + 60) / width * 100.) + "% 0, from(black), to(rgba(0,0,0,0))";
-	var right_shadow = "linear, " + ((width * 0.35 + 190) / width * 100.) + "% 0, " + ((width * 0.35 - 30) / width * 100.) + "% 0, from(black), to(rgba(0,0,0,0))";
-	var grd = ctx.createLinearGradient(width * 0.35 - 170, 0, width * 0.35 + 60, 0);
+let drawShadow = function () {
+	let left_shadow = "linear, " + ((width * 0.35 - 170) / width * 100.) + "% 0, " + ((width * 0.35 + 60) / width * 100.) + "% 0, from(black), to(rgba(0,0,0,0))";
+	let right_shadow = "linear, " + ((width * 0.35 + 190) / width * 100.) + "% 0, " + ((width * 0.35 - 30) / width * 100.) + "% 0, from(black), to(rgba(0,0,0,0))";
+	let grd = ctx.createLinearGradient(width * 0.35 - 170, 0, width * 0.35 + 60, 0);
 	grd.addColorStop(0, "black");
 	grd.addColorStop(1, "rgba(0, 0, 0, 0)");
 	ctx.fillStyle = grd;
@@ -211,29 +216,29 @@ var drawShadow = function() {
 	ctx.fillRect((width * 0.35 - 30), 0, 220, height);
 	ctx.fillStyle = "black";
 	ctx.fillRect(width * 0.35 + 190, 0, width * 0.65 - 190, height);
-}
+};
 
-var drawHidden = function() {
+let drawHidden = function () {
 	ctx.fillStyle = "black";
 	ctx.fillRect(width * 0.35, 30, 300, height - 180);
-}
+};
 
-var drawCanvas = function(){
+let drawCanvas = function () {
 	clearCanvas();
 	drawSky();
-	for(var i = pipeSt; i < pipeNumber; ++i){
+	for (let i = pipeSt; i < pipeNumber; ++i) {
 		drawPipe(width - dist + i * 220, pipes[i]);
-		if(mode == 2){
-			if(pipesDir[i]){
-				if(pipes[i] + 1 > height - 300){
+		if (mode == 2) {
+			if (pipesDir[i]) {
+				if (pipes[i] + 1 > height - 300) {
 					pipesDir[i] = !pipesDir[i];
 					pipes[i] -= 1;
 				}
 				else
 					pipes[i] += 1;
 			}
-			else{
-				if(pipes[i] - 1 < 10){
+			else {
+				if (pipes[i] - 1 < 10) {
 					pipesDir[i] = !pipesDir[i];
 					pipes[i] += 1;
 				}
@@ -243,20 +248,20 @@ var drawCanvas = function(){
 		}
 	}
 	drawLand();
-	if(flashlight_switch)
+	if (flashlight_switch)
 		drawShadow();
-	else if(hidden_switch)
+	else if (hidden_switch)
 		drawHidden();
 	drawBird();
 	drawScore();
-}
+};
 
-var anim = function(){
+let anim = function () {
 	animation = setInterval(drawCanvas, 1000 / 60);
-}
+};
 
-var jump = function(){
-	if(death){
+let jump = function () {
+	if (death) {
 		dist = 0;
 		birdY = (height - 112) / 2;
 		birdF = 0;
@@ -269,23 +274,23 @@ var jump = function(){
 		pipeNumber = 10;
 		pipes = [];
 		pipesDir = [];
-		for(var i = 0; i < 10; ++i){
+		for (let i = 0; i < 10; ++i) {
 			pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
 			pipesDir.push((Math.random() > 0.5));
 		}
 		anim();
 	}
-	if(mode == 0)
+	if (mode == 0)
 		birdV = 6;
-	else if(mode == 1)
+	else if (mode == 1)
 		birdV = 6;
 	else
 		birdV = 6;
-}
+};
 
-var easy, normal, hard;
+let easy, normal, hard;
 
-function easyMode(){
+function easyMode() {
 	easy.style["box-shadow"] = "0 0 0 2px #165CF3";
 	normal.style["box-shadow"] = "";
 	hard.style["box-shadow"] = "";
@@ -296,7 +301,7 @@ function easyMode(){
 	initCanvas();
 }
 
-function normalMode(){
+function normalMode() {
 	easy.style["box-shadow"] = "";
 	normal.style["box-shadow"] = "0 0 0 2px #165CF3";
 	hard.style["box-shadow"] = "";
@@ -307,7 +312,7 @@ function normalMode(){
 	initCanvas();
 }
 
-function hardMode(){
+function hardMode() {
 	easy.style["box-shadow"] = "";
 	normal.style["box-shadow"] = "";
 	hard.style["box-shadow"] = "0 0 0 2px #165CF3";
@@ -318,84 +323,84 @@ function hardMode(){
 	initCanvas();
 }
 
-function flashlight(){
+function flashlight() {
 	document.getElementById("flashlight").style.background = ["red", "rgba(255, 255, 255, 0.6)"][+flashlight_switch];
 	flashlight_switch ^= 1;
 }
 
-function hidden(){
+function hidden() {
 	document.getElementById("hidden").style.background = ["red", "rgba(255, 255, 255, 0.6)"][+hidden_switch];
 	hidden_switch ^= 1;
 }
 
-window.onload = function(){
-    //document.addEventListener("touchend", function(e) { e.preventDefault(); }, false);
-    mode = 0;
-    score = 0;
-    playdata = [0, 0];
-    if(window.window.WeixinApi || window.WeixinJSBridge) {
-        wechat = true;
-        WeixinApi.ready(function(Api) {
+window.onload = function () {
+	//document.addEventListener("touchend", function(e) { e.preventDefault(); }, false);
+	mode = 0;
+	score = 0;
+	playdata = [0, 0];
+	if (window.window.WeixinApi || window.WeixinJSBridge) {
+		wechat = true;
+		WeixinApi.ready(function (Api) {
 
-            wxData = {
-                "appId": "",
-                "imgUrl" : 'http://shud.in/flappybird/images/logo.png',
-                "imgWidth": '200',
-                "imgHeight": '200',
-                "link" : 'http://shud.in/flappybird',
-                "desc" : 'Easy / Normal / Hard 三种难度, Flappy Bird 网页版',
-                "title" : "Flappy Bird"
-            };
+			wxData = {
+				"appId": "",
+				"imgUrl": 'http://shud.in/flappybird/images/logo.png',
+				"imgWidth": '200',
+				"imgHeight": '200',
+				"link": 'http://shud.in/flappybird',
+				"desc": 'Easy / Normal / Hard 三种难度, Flappy Bird 网页版',
+				"title": "Flappy Bird"
+			};
 
-            var wxCallbacks = {
-                ready : function() {
-                    wxData["title"] = 'Flappy Bird';
-                    if(flashlight_switch)
-                        wxData["desc"] = '我刚刚开启 flashlight, 在 ' + ["easy", "normal", "hard"][playdata[0]] + ' 下取得 ' + playdata[1] + ' 分, 你也来试试吧！';
-                    else
-                        wxData["desc"] = '我刚刚在 ' + ["easy", "normal", "hard"][playdata[0]] + ' 下取得 ' + playdata[1] + ' 分, 你也来试试吧！';
-                },
-                cancel : function(resp) {
-                },
-                fail : function(resp) {
-                    alert("分享失败 > <");
-                },
-                confirm : function(resp) {
-                    alert("分享成功 XD");
-                },
-                all : function(resp,shareTo) {
-                }
-            };
+			let wxCallbacks = {
+				ready: function () {
+					wxData["title"] = 'Flappy Bird';
+					if (flashlight_switch)
+						wxData["desc"] = '我刚刚开启 flashlight, 在 ' + ["easy", "normal", "hard"][playdata[0]] + ' 下取得 ' + playdata[1] + ' 分, 你也来试试吧！';
+					else
+						wxData["desc"] = '我刚刚在 ' + ["easy", "normal", "hard"][playdata[0]] + ' 下取得 ' + playdata[1] + ' 分, 你也来试试吧！';
+				},
+				cancel: function (resp) {
+				},
+				fail: function (resp) {
+					alert("分享失败 > <");
+				},
+				confirm: function (resp) {
+					alert("分享成功 XD");
+				},
+				all: function (resp, shareTo) {
+				}
+			};
 
-            // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-            Api.shareToFriend(wxData, wxCallbacks);
+			// 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+			Api.shareToFriend(wxData, wxCallbacks);
 
-            // 点击分享到朋友圈，会执行下面这个代码
-            Api.shareToTimeline(wxData, wxCallbacks);
+			// 点击分享到朋友圈，会执行下面这个代码
+			Api.shareToTimeline(wxData, wxCallbacks);
 
-            // 点击分享到腾讯微博，会执行下面这个代码
-            Api.shareToWeibo(wxData, wxCallbacks);
+			// 点击分享到腾讯微博，会执行下面这个代码
+			Api.shareToWeibo(wxData, wxCallbacks);
 
-            // iOS上，可以直接调用这个API进行分享，一句话搞定
-            Api.generalShare(wxData, wxCallbacks);
-        });
-    }
+			// iOS上，可以直接调用这个API进行分享，一句话搞定
+			Api.generalShare(wxData, wxCallbacks);
+		});
+	}
 	maxScore = 0;
 	dropSpeed = 0.3;
 	mode = 0;
 	delta = 100;
 	initCanvas();
 	easy = document.getElementById("easy");
-    easy.onclick = easyMode;
+	easy.onclick = easyMode;
 	normal = document.getElementById("normal");
-    normal.onclick = normalMode;
+	normal.onclick = normalMode;
 	hard = document.getElementById("hard");
-    hard.onclick = hardMode;
+	hard.onclick = hardMode;
 	document.getElementById("flashlight").onclick = flashlight;
 	//document.getElementById("hidden").onclick = hidden;
-	window.onresize = function() {
+	window.onresize = function () {
 		canvas.width = width = window.innerWidth;
 		canvas.height = height = window.innerHeight;
 		drawCanvas();
-	}
-}
+	};
+};
