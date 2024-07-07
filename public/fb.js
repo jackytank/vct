@@ -11,6 +11,13 @@ let mode, delta;
 let wechat = false;
 let playend = false, playdata = [];
 let wxData;
+const DISTANCE_BETWEEN_PIPES = 500;
+const BIRD_WIDTH = 100;
+const PIPE_WIDTH = 40;
+const BIRD_COLLISION_OFFSET_TOP = 22;
+const BIRD_COLLISION_HEIGHT = 22;
+const PIPE_COLLISION_OFFSET = 144;
+const PIPE_GAP = 168;
 
 let clearCanvas = function () {
 	// ctx.fillStyle = '#4EC0CA';
@@ -149,24 +156,24 @@ let drawLand = function () {
 let drawPipe = function (x, y) {
 	ctx.drawImage(pipe, x, 0, pipe.width, y);
 	ctx.drawImage(pipeDown, x, y);
-	ctx.drawImage(pipe, x, y + 168 + delta, pipe.width, height - 112);
-	ctx.drawImage(pipeUp, x, y + 144 + delta);
-	if (x < birdPos + 32 && x + 50 > birdPos && (birdY < y + 22 || birdY + 22 > y + 144 + delta)) {
+	ctx.drawImage(pipe, x, y + PIPE_GAP + delta, pipe.width, height - 112);
+	ctx.drawImage(pipeUp, x, y + PIPE_COLLISION_OFFSET + delta);
+
+	if (x < birdPos + BIRD_WIDTH && x + 50 > birdPos &&
+		(birdY < y + BIRD_COLLISION_OFFSET_TOP || birdY + BIRD_COLLISION_HEIGHT > y + PIPE_COLLISION_OFFSET + delta)) {
 		clearInterval(animation);
 		death = 1;
-	}
-	else if (x + 40 < 0) {
+	} else if (x + PIPE_WIDTH < 0) {
 		pipeSt++;
 		pipeNumber++;
 		pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
 		pipesDir.push((Math.random() > 0.5));
 	}
-
 };
 
 let drawBird = function () {
-	const numOfFrames = 9; // Number of frames in the sprite sheet
-	let birdHeight = (bird.height / numOfFrames); // Divide the total height by 9 to get the height of each bird
+	const numOfBirdsVerticallyInsidePng = 9; // Number of frames in the sprite sheet
+	let birdHeight = (bird.height / numOfBirdsVerticallyInsidePng); // Divide the total height by 9 to get the height of each bird, current: 123.44(4)
 	let birdWidth = bird.width; // Width of the bird is the same as the sprite sheet
 
 	// Calculate the y position of the bird frame in the sprite sheet
@@ -176,7 +183,7 @@ let drawBird = function () {
 
 	birdF = (birdF + 1) % 6;
 	if (birdF % 6 == 0)
-		birdN = (birdN + 1) % numOfFrames; // Update to 9 for the new sprite sheet
+		birdN = (birdN + 1) % numOfBirdsVerticallyInsidePng; // Update to 9 for the new sprite sheet
 
 	birdY -= birdV;
 	birdV -= dropSpeed;
@@ -227,7 +234,7 @@ let drawCanvas = function () {
 	clearCanvas();
 	drawSky();
 	for (let i = pipeSt; i < pipeNumber; ++i) {
-		drawPipe(width - dist + i * 220, pipes[i]);
+		drawPipe(width - dist + i * DISTANCE_BETWEEN_PIPES, pipes[i]);
 		if (mode == 2) {
 			if (pipesDir[i]) {
 				if (pipes[i] + 1 > height - 300) {
