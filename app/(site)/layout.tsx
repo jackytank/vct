@@ -28,7 +28,7 @@ export default function RootLayout({
           {/* <Lines /> */}
           <Header />
           <ToasterContext />
-          <MouseSparklingStars />
+          {/* <MouseSparklingStars /> */}
           <div className="border border-y-2">
             {children}
           </div>

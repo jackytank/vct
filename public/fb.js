@@ -11,8 +11,8 @@ let mode, delta;
 let wechat = false;
 let playend = false, playdata = [];
 let wxData;
-var pipeUpImages = [];
-var pipeDownImages = [];
+let pipeUpImages = [];
+let pipeDownImages = [];
 const DISTANCE_BETWEEN_PIPES = 500;
 const BIRD_WIDTH = 100;
 const PIPE_WIDTH = 40;
@@ -28,7 +28,7 @@ let clearCanvas = function () {
 };
 
 let loadImages = function () {
-	let imgNumber = 18, imgComplete = 0;
+	let imgNumber = 9, imgComplete = 0;
 	let onImgLoad = function () {
 		imgComplete++;
 		if (imgComplete == imgNumber) {
@@ -64,17 +64,17 @@ let loadImages = function () {
 	bird.src = 'images/bird.png';
 	bird.onload = onImgLoad;
 
-	// pipe = new Image();
-	// pipe.src = 'images/pipe.png';
-	// pipe.onload = onImgLoad;
+	pipe = new Image();
+	pipe.src = 'images/pipe.png';
+	pipe.onload = onImgLoad;
 
-	// pipeUp = new Image();
-	// pipeUp.src = 'images/pipe-up.png';
-	// pipeUp.onload = onImgLoad;
+	pipeUp = new Image();
+	pipeUp.src = 'images/pipe-up.png';
+	pipeUp.onload = onImgLoad;
 
-	// pipeDown = new Image();
-	// pipeDown.src = 'images/pipe-down.png';
-	// pipeDown.onload = onImgLoad;
+	pipeDown = new Image();
+	pipeDown.src = 'images/pipe-down.png';
+	pipeDown.onload = onImgLoad;
 
 	scoreBoard = new Image();
 	scoreBoard.src = 'images/scoreboard.png';
@@ -88,15 +88,15 @@ let loadImages = function () {
 	splash.src = 'images/splash.png';
 	splash.onload = onImgLoad;
 
-	for (let i = 0; i < 6; i++) {
-		pipeUpImages[i] = new Image();
-		pipeUpImages[i].src = 'images/pipe-up-' + (i + 1) + '.png';
-		pipeUpImages[i].onload = onImgLoad;
+	// for (let i = 0; i < 6; i++) {
+	// 	pipeUpImages[i] = new Image();
+	// 	pipeUpImages[i].src = 'images/pipe-up-' + (i + 1) + '.png';
+	// 	pipeUpImages[i].onload = onImgLoad;
 
-		pipeDownImages[i] = new Image();
-		pipeDownImages[i].src = 'images/pipe-down-' + (i + 1) + '.png';
-		pipeDownImages[i].onload = onImgLoad;
-	}
+	// 	pipeDownImages[i] = new Image();
+	// 	pipeDownImages[i].src = 'images/pipe-down-' + (i + 1) + '.png';
+	// 	pipeDownImages[i].onload = onImgLoad;
+	// }
 };
 
 function is_touch_device() {
@@ -112,7 +112,7 @@ let initCanvas = function () {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
 	canvas.width = width = window.innerWidth;
-	canvas.height = height = window.innerHeight;
+	canvas.height = height = window.innerHeight - 100;
 	if (is_touch_device()) {
 		canvas.addEventListener("touchend", function (e) { e.preventDefault(); }, false);
 		canvas.addEventListener("touchstart", function (e) {
@@ -165,45 +165,46 @@ let drawLand = function () {
 	}
 };
 
-// let drawPipe = function (x, y) {
-// 	ctx.drawImage(pipe, x, 0, pipe.width, y);
-// 	ctx.drawImage(pipeDown, x, y);
-// 	ctx.drawImage(pipe, x, y + PIPE_GAP + delta, pipe.width, height - 112);
-// 	ctx.drawImage(pipeUp, x, y + PIPE_COLLISION_OFFSET + delta);
+let drawPipe = function (x, y) {
+	// drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+	ctx.drawImage(pipe, x, 0 + 5, pipe.width, y);
+	ctx.drawImage(pipeDown, x, y);
+	ctx.drawImage(pipe, x, y + PIPE_GAP + delta, pipe.width, height - 112);
+	ctx.drawImage(pipeUp, x - 28, y + PIPE_COLLISION_OFFSET + delta);
 
-// 	if (x < birdPos + BIRD_WIDTH && x + 50 > birdPos &&
-// 		(birdY < y + BIRD_COLLISION_OFFSET_TOP || birdY + BIRD_COLLISION_HEIGHT > y + PIPE_COLLISION_OFFSET + delta)) {
-// 		clearInterval(animation);
-// 		death = 1;
-// 	} else if (x + PIPE_WIDTH < 0) {
-// 		pipeSt++;
-// 		pipeNumber++;
-// 		pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
-// 		pipesDir.push((Math.random() > 0.5));
-// 	}
-// };
-
-const drawPipe = function (x, y, index) {
-	var pipeUpImage = pipeUpImages[index % 6];
-	var pipeDownImage = pipeDownImages[index % 6];
-
-	// Draw the bottom pipe
-	ctx.drawImage(pipeDownImage, x, y + PIPE_GAP + delta, pipeDownImage.width, height - 112);
-
-	// Draw the top pipe
-	ctx.drawImage(pipeUpImage, x, 0, pipeUpImage.width, y);
-
-	if (x < birdPos + 20 && x + 50 > birdPos &&
-		(birdY < y || birdY + 24 > y + PIPE_GAP + delta)) {
+	if (x < birdPos + BIRD_WIDTH && x + 50 > birdPos &&
+		(birdY < y + BIRD_COLLISION_OFFSET_TOP || birdY + BIRD_COLLISION_HEIGHT > y + PIPE_COLLISION_OFFSET + delta)) {
 		clearInterval(animation);
 		death = 1;
-	} else if (x + 50 < 0) {
+	} else if (x + PIPE_WIDTH < 0) {
 		pipeSt++;
 		pipeNumber++;
 		pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
 		pipesDir.push((Math.random() > 0.5));
 	}
 };
+
+// const drawPipe = function (x, y, index) {
+// 	var pipeUpImage = pipeUpImages[index % 6];
+// 	var pipeDownImage = pipeDownImages[index % 6];
+
+// 	// Draw the bottom pipe
+// 	ctx.drawImage(pipeDownImage, x, y + PIPE_GAP + delta, pipeDownImage.width, height - 112);
+
+// 	// Draw the top pipe
+// 	ctx.drawImage(pipeUpImage, x, 0, pipeUpImage.width, y);
+
+// 	if (x < birdPos + 20 && x + 50 > birdPos &&
+// 		(birdY < y || birdY + 24 > y + PIPE_GAP + delta)) {
+// 		clearInterval(animation);
+// 		death = 1;
+// 	} else if (x + 50 < 0) {
+// 		pipeSt++;
+// 		pipeNumber++;
+// 		pipes.push(Math.floor(Math.random() * (height - 300 - delta) + 10));
+// 		pipesDir.push((Math.random() > 0.5));
+// 	}
+// };
 
 
 let drawBird = function () {
@@ -265,59 +266,27 @@ let drawHidden = function () {
 	ctx.fillRect(width * 0.35, 30, 300, height - 180);
 };
 
-// let drawCanvas = function () {
-// 	clearCanvas();
-// 	drawSky();
-// 	for (let i = pipeSt; i < pipeNumber; ++i) {
-// 		drawPipe(width - dist + i * DISTANCE_BETWEEN_PIPES, pipes[i]);
-// 		if (mode == 2) {
-// 			if (pipesDir[i]) {
-// 				if (pipes[i] + 1 > height - 300) {
-// 					pipesDir[i] = !pipesDir[i];
-// 					pipes[i] -= 1;
-// 				}
-// 				else
-// 					pipes[i] += 1;
-// 			}
-// 			else {
-// 				if (pipes[i] - 1 < 10) {
-// 					pipesDir[i] = !pipesDir[i];
-// 					pipes[i] += 1;
-// 				}
-// 				else
-// 					pipes[i] -= 1;
-// 			}
-// 		}
-// 	}
-// 	drawLand();
-// 	if (flashlight_switch)
-// 		drawShadow();
-// 	else if (hidden_switch)
-// 		drawHidden();
-// 	drawBird();
-// 	drawScore();
-// };
-
-const drawCanvas = function () {
+let drawCanvas = function () {
 	clearCanvas();
 	drawSky();
 	for (let i = pipeSt; i < pipeNumber; ++i) {
-		drawPipe(width - dist + i * 220, pipes[i], i);
+		drawPipe(width - dist + i * DISTANCE_BETWEEN_PIPES, pipes[i]);
 		if (mode == 2) {
 			if (pipesDir[i]) {
 				if (pipes[i] + 1 > height - 300) {
 					pipesDir[i] = !pipesDir[i];
 					pipes[i] -= 1;
-				} else {
-					pipes[i] += 1;
 				}
-			} else {
+				else
+					pipes[i] += 1;
+			}
+			else {
 				if (pipes[i] - 1 < 10) {
 					pipesDir[i] = !pipesDir[i];
 					pipes[i] += 1;
-				} else {
-					pipes[i] -= 1;
 				}
+				else
+					pipes[i] -= 1;
 			}
 		}
 	}
@@ -329,6 +298,38 @@ const drawCanvas = function () {
 	drawBird();
 	drawScore();
 };
+
+// const drawCanvas = function () {
+// 	clearCanvas();
+// 	drawSky();
+// 	for (let i = pipeSt; i < pipeNumber; ++i) {
+// 		drawPipe(width - dist + i * 220, pipes[i], i);
+// 		if (mode == 2) {
+// 			if (pipesDir[i]) {
+// 				if (pipes[i] + 1 > height - 300) {
+// 					pipesDir[i] = !pipesDir[i];
+// 					pipes[i] -= 1;
+// 				} else {
+// 					pipes[i] += 1;
+// 				}
+// 			} else {
+// 				if (pipes[i] - 1 < 10) {
+// 					pipesDir[i] = !pipesDir[i];
+// 					pipes[i] += 1;
+// 				} else {
+// 					pipes[i] -= 1;
+// 				}
+// 			}
+// 		}
+// 	}
+// 	drawLand();
+// 	if (flashlight_switch)
+// 		drawShadow();
+// 	else if (hidden_switch)
+// 		drawHidden();
+// 	drawBird();
+// 	drawScore();
+// };
 
 
 let anim = function () {
