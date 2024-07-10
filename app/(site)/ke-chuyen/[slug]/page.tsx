@@ -4,13 +4,10 @@ import SocialshareButtons from "@/components/Notion-CMS/SocialshareButtons";
 import TopScrollButton from "@/components/Notion-CMS/TopScrollButton";
 import AudioPlayer from "@/components/TextToSpeech/AudioPlayer";
 import { Article } from "@/types/notion-type";
-import { fetchTTS } from "@/utils/helper";
-import getLocalizedDate, { notion, convertToPost, getAllPosts, getTagFilteredPostsByTagsAndSlug, getPageContent } from "@/utils/notion-helper";
-import bookmarkPlugin from "@notion-render/bookmark-plugin";
-import { NotionRenderer } from "@notion-render/client";
-import hljsPlugin from "@notion-render/hljs-plugin";
+import getLocalizedDate, { convertToPost, getTagFilteredPostsByTagsAndSlug, getPageContent, getPageProperties, renderNotionContent } from "@/utils/notion-helper";
 import Link from "next/link";
 
+export const revalidate = 1;
 
 export default async function Page({
     searchParams,
@@ -22,7 +19,7 @@ export default async function Page({
     //     next: { revalidate: 60 },
     // });
     // const blockMap = await response.json();
-    const pageProperties = await notion.pages.retrieve({ page_id: id });
+    const pageProperties = await getPageProperties(id);
     const postDetails = convertToPost(pageProperties);
     // const moreArticles: Article[] = await getAllPosts();
     const formattedTime = getLocalizedDate(postDetails.date);
@@ -31,14 +28,9 @@ export default async function Page({
     const content = await getPageContent(id);
     // Pass id instead of uniqueId
     const tagPosts: Article[] = await getTagFilteredPostsByTagsAndSlug({ tags, slug: String(slug) });
-
-    const notionRenderer = new NotionRenderer({
-        client: notion,
-    });
-    notionRenderer.use(hljsPlugin({}));
-    notionRenderer.use(bookmarkPlugin(undefined));
-    const html = await notionRenderer.render(...content);
+    const html = await renderNotionContent(content);
     const storyText = `Đây là giọng đọc AI miễn phí của FPT.ai, và sau đây là câu chuyện: ${postDetails.title}. ${html}`;
+
     return (
         <div className="py-20 lg:py-25 xl:py-30 space-y-5 max-w-7xl m-auto min-h-screen">
             <img alt="cannot-load" className="object-cover w-full h-52 xl:rounded-[20px] aspect-video" src={postDetails.coverImage} />

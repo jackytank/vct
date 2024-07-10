@@ -5,6 +5,9 @@ import React, { cache } from "react";
 import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import bookmarkPlugin from "@notion-render/bookmark-plugin";
+import { NotionRenderer } from "@notion-render/client";
+import hljsPlugin from "@notion-render/hljs-plugin";
 
 export const notion = new Client({
     auth: process.env.NOTION_API_KEY,
@@ -48,6 +51,7 @@ export const getPageContent = React.cache((pageId: string) => {
 // ------------------------------ version 2 - Professional -> BEGIN ------------------------------
 
 export const getNotionPages = cache(() => {
+    console.log('----------------getNotionPages');
     return notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID!,
         filter: {
@@ -74,6 +78,9 @@ export const getNotionPages = cache(() => {
         ],
     });
 
+});
+export const getPageProperties = cache((pageId: string) => {
+    return notion.pages.retrieve({ page_id: pageId });
 });
 export const getAllPosts = async (): Promise<Article[]> => {
     const response = await getNotionPages();
@@ -172,6 +179,14 @@ const getFilteredPagesByTagSlug = cache((tags: string[], slug: string, databaseI
         ],
         page_size: 2, // Limit to 2 articles
     });
+});
+export const renderNotionContent = cache(async (content: BlockObjectResponse[]) => {
+    const notionRenderer = new NotionRenderer({
+        client: notion,
+    });
+    notionRenderer.use(hljsPlugin({}));
+    notionRenderer.use(bookmarkPlugin(undefined));
+    return await notionRenderer.render(...content);
 });
 
 export const getTagFilteredPostsByTagsAndSlug = async ({

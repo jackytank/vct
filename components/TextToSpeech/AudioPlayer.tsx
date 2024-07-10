@@ -59,7 +59,7 @@ const AudioPlayer: React.FC<{ text: string; }> = ({ text }) => {
             </audio>
             {isLoading && (
                 <div className="tooltip">
-                    Đang load giọng đọc, vui lòng chờ trong giây lát
+                    Giọng đọc đang load hoặc bị lỗi
                 </div>
             )}
         </div>
