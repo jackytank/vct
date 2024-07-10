@@ -7,11 +7,13 @@ export const fetchTTS = async ({
         const response = await fetch('https://api.fpt.ai/hmi/tts/v5', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'api-key': process.env.FPT_AI_API_KEY as string,
+              'api-key': process.env.FPT_AI_API_KEY as string,
+              'voice': 'banmai',
+              'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: text, // Replace with your desired text
-        });
+            body: text,
+            cache: 'no-store',
+          });
 
         if (response.ok) {
             const data: FPTAiResponse = await response.json();

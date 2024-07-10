@@ -18,16 +18,13 @@ export default async function Page({
     searchParams: { [key: string]: string; };
 }>) {
     const { id } = searchParams;
-    const response = await fetch(`https://notion-api.splitbee.io/v1/page/${id}`, {
-        next: { revalidate: 60 },
-    });
-    const blockMap = await response.json();
+    // const response = await fetch(`https://notion-api.splitbee.io/v1/page/${id}`, {
+    //     next: { revalidate: 60 },
+    // });
+    // const blockMap = await response.json();
     const pageProperties = await notion.pages.retrieve({ page_id: id });
-    console.log('response', response);
-    console.log('pageProperties', pageProperties);
     const postDetails = convertToPost(pageProperties);
-    console.log('postDetails', postDetails);
-    const moreArticles: Article[] = await getAllPosts();
+    // const moreArticles: Article[] = await getAllPosts();
     const formattedTime = getLocalizedDate(postDetails.date);
     const slug = postDetails.slug || [];
     const tags = postDetails.tags || [];
@@ -41,15 +38,7 @@ export default async function Page({
     notionRenderer.use(hljsPlugin({}));
     notionRenderer.use(bookmarkPlugin(undefined));
     const html = await notionRenderer.render(...content);
-    const mp3Url = await fetchTTS({
-        text: `Đây là giọng đọc AI miễn phí của FPT.ai, và sau đây là câu chuyện: ${postDetails.title}. ${html}`,
-    });
-    if (mp3Url) {
-        console.log('MP3 URL:', mp3Url);
-    } else {
-        console.log('Error fetching TTS data.');
-    }
-
+    const storyText = `Đây là giọng đọc AI miễn phí của FPT.ai, và sau đây là câu chuyện: ${postDetails.title}. ${html}`;
     return (
         <div className="py-20 lg:py-25 xl:py-30 space-y-5 max-w-7xl m-auto min-h-screen">
             <img alt="cannot-load" className="object-cover w-full h-52 xl:rounded-[20px] aspect-video" src={postDetails.coverImage} />
@@ -73,7 +62,7 @@ export default async function Page({
                     </div>
                 </div>
                 {/* <TestTextToSpeech text={html} /> */}
-                {mp3Url && <AudioPlayer audioUrl={mp3Url} />}
+                {storyText && <AudioPlayer text={storyText} />}
                 <div className="max-w-4xl px-6 mx-auto mb-24 space-y-8 md:px-8 pt-4 border-t mt-4" dangerouslySetInnerHTML={{ __html: html }}>
                 </div>
                 <div className="py-12 border-t">
