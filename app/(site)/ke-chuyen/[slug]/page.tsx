@@ -30,7 +30,7 @@ export default async function Page({
     const tagPosts: Article[] = await getTagFilteredPostsByTagsAndSlug({ tags, slug: String(slug) });
     const html = await renderNotionContent(content);
     const storyText = `Đây là giọng đọc AI miễn phí của FPT.ai, và sau đây là câu chuyện: ${postDetails.title}. ${html}`;
-
+    const baseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
     return (
         <div className="py-20 lg:py-25 xl:py-30 space-y-5 max-w-7xl m-auto min-h-screen">
             <img alt="cannot-load" className="object-cover w-full h-52 xl:rounded-[20px] aspect-video" src={postDetails.coverImage} />
@@ -48,7 +48,7 @@ export default async function Page({
                             {postDetails.author}
                         </div>
                         <SocialshareButtons
-                            shareUrl={`http://localhost:3000/${postDetails.slug}?id=${postDetails.id}`}
+                            shareUrl={`${baseUrl}/${postDetails.slug}?id=${postDetails.id}`}
                             title={postDetails.title}
                         />
                     </div>
@@ -60,10 +60,10 @@ export default async function Page({
                 <div className="py-12 border-t">
                     <Container>
                         <div className="flex items-center justify-between my-8">
-                            <div className="text-3xl font-bold text-gray-900">Latest articles</div>
+                            <div className="text-3xl font-bold text-gray-900">Truyện mới nhất</div>
                             <Link href="/ke-chuyen">
                                 <span className="font-semibold text-gray-900 cursor-pointer">
-                                    More articles ➜
+                                    Nhiều truyện hơn ➜
                                 </span>
                             </Link>
                         </div>

@@ -25,12 +25,11 @@
       const searchContent = post.title + post.summary + tagContent;
       return searchContent.toLowerCase().includes(searchValue.toLowerCase());
     });
-
     return (
       <>
         <div className="mb-5">
           <Input
-            placeholder={slug ? `Search in #${normalizedSlug}` : "Search Articles"}
+            placeholder={slug ? `Tìm truyện trong #${normalizedSlug}` : "Tìm truyện"}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
