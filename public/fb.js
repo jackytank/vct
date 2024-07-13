@@ -266,7 +266,7 @@ let drawScore = function () {
 	for (let i = 0; i < scoreStr.length; i++) {
 		let digit = parseInt(scoreStr[i]);
 		const numberImage = numberImages[digit];
-		ctx.drawImage(numberImages[digit], x + i * numberImage.width, height * 0.15, numberImage.width, numberImage.height);
+		ctx.drawImage(numberImages[digit], x + i * (numberImage.width + 10), height * 0.2, numberImage.width, numberImage.height);
 	}
 };
 
