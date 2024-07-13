@@ -11,7 +11,9 @@ const IntroImageAnimation = () => {
     const whiteLeftCloudImage = '/images/intro/CLOUD_WHITE_LEFT.png';
     const whiteRightCloudImage = '/images/intro/CLOUD_WHITE_RIGHT.png';
     const centerHomepageBrandText = '/images/intro/CO_TICH_TYPO.png';
-    const starsImage = '/images/intro/STARS.png';
+    const starMiddle = '/images/intro/STAR_MIDDLE.png';
+    const starLeft = '/images/intro/STAR_LEFT.png';
+    const starRight = '/images/intro/STAR_RIGHT.png';
     const slideDistance = 250;
 
     const handleMouseEnter = () => {
@@ -66,6 +68,23 @@ const IntroImageAnimation = () => {
         return () => clearTimeout(timeoutId);
     }, [isHovered]);
 
+    const animateStarImage = (src: string) => {
+        return (
+            <motion.img
+                src={src}
+                alt="stars"
+                className="absolute top-0 z-1"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    hidden: { opacity: 0, y: -5 },
+                    visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 1, delay: 0.1, repeat: Infinity, repeatType: "reverse" }}
+            />
+        );
+    };
+
     return (
         <div className="relative w-auto min-w-full min-h-full max-w-none">
             <img
@@ -79,18 +98,9 @@ const IntroImageAnimation = () => {
                 className="absolute top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
                 style={centerTextSpring}
             />
-            <motion.img
-                src={starsImage}
-                alt="stars"
-                className="absolute top-0 z-1"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                    hidden: { opacity: 0, y: -5 },
-                    visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 1, delay: 0.1, repeat: Infinity, repeatType: "reverse" }}
-            />
+            {animateStarImage(starLeft)}
+            {animateStarImage(starRight)}
+            {animateStarImage(starMiddle)}
             <div>
                 <animated.img
                     src={yellowLeftCloudImage}
