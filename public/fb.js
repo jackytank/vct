@@ -1,10 +1,14 @@
+// @ts-check
 let canvas, ctx;
 let width, height, birdPos;
 let sky, land, bird, pipe, pipeUp, pipeDown, scoreBoard, ready, splash;
 let dist, birdY, birdF, birdN, birdV;
 let animation, death, deathAnim;
 let pipes = [], pipesDir = [], pipeSt, pipeNumber;
-let score, maxScore;
+/**@type {number}*/
+let score;
+/**@type {number}*/
+let maxScore;
 let dropSpeed;
 let flashlight_switch = false, hidden_switch = false;
 let mode, delta;
@@ -13,7 +17,8 @@ let playend = false, playdata = [];
 let wxData;
 let pipeUpImages = [];
 let pipeDownImages = [];
-const DISTANCE_BETWEEN_PIPES = 500;
+let numberImages = [];
+const DISTANCE_BETWEEN_PIPES = 440;
 const BIRD_WIDTH = 100;
 const PIPE_WIDTH = 40;
 const BIRD_COLLISION_OFFSET_TOP = 22;
@@ -21,14 +26,14 @@ const BIRD_COLLISION_HEIGHT = 22;
 const PIPE_COLLISION_OFFSET = 144;
 const PIPE_GAP = 168;
 
-let clearCanvas = function () {
-	// ctx.fillStyle = '#4EC0CA';
-	ctx.fillStyle = '#A0FEFA';
+let fillRestOfCanvasByAConcreteColorCode = function () {
+	// ctx.fillStyle = '#A0FEFA'; v2
+	ctx.fillStyle = '#FCF7EA';
 	ctx.fillRect(0, 0, width, height);
 };
 
 let loadImages = function () {
-	let imgNumber = 9, imgComplete = 0;
+	let imgNumber = 19, imgComplete = 0;
 	let onImgLoad = function () {
 		imgComplete++;
 		if (imgComplete == imgNumber) {
@@ -97,6 +102,12 @@ let loadImages = function () {
 	// 	pipeDownImages[i].src = 'images/pipe-down-' + (i + 1) + '.png';
 	// 	pipeDownImages[i].onload = onImgLoad;
 	// }
+
+	for (let i = 0; i < 10; i++) {
+		numberImages[i] = new Image();
+		numberImages[i].src = `images/${i}.png`; // Replace 'path/to/' with the actual path to the images
+		numberImages[i].onload = onImgLoad;
+	}
 };
 
 function is_touch_device() {
@@ -110,8 +121,12 @@ function is_touch_device() {
 
 let initCanvas = function () {
 	canvas = document.getElementById("canvas");
+	if (!canvas) return;
+	// @ts-ignore
 	ctx = canvas.getContext('2d');
+	// @ts-ignore
 	canvas.width = width = window.innerWidth;
+	// @ts-ignore
 	canvas.height = height = window.innerHeight - 100;
 	if (is_touch_device()) {
 		canvas.addEventListener("touchend", function (e) { e.preventDefault(); }, false);
@@ -123,31 +138,32 @@ let initCanvas = function () {
 	else
 		canvas.onmousedown = jump;
 	window.onkeydown = jump;
+	// @ts-ignore
 	FastClick.attach(canvas);
 	loadImages();
 };
 
 let deathAnimation = function () {
 	if (splash) {
-		ctx.drawImage(splash, width / 2 - 300, height / 2 - 250);
+		ctx.drawImage(splash, width / 2 - 118, height / 2 + 70);
 		splash = undefined;
 	}
 	else {
-		ctx.drawImage(scoreBoard, width / 2 - 118, height / 2 - 54);
+		ctx.drawImage(scoreBoard, width / 2 - 118, height / 2 + 80);
 		playend = true;
 		playdata = [mode, score];
-		if (window.window.WeixinApi && window.WeixinJSBridge) {
-			//alert("您在 " + ["easy", "normal", "hard"][mode] + " 模式中取得 " + score + " 分，右上角分享成绩到朋友圈吧~");
-		}
+		// if (window.window.WeixinApi && window.WeixinJSBridge) {
+		//alert("您在 " + ["easy", "normal", "hard"][mode] + " 模式中取得 " + score + " 分，右上角分享成绩到朋友圈吧~");
+		// }
 	}
-	ctx.drawImage(ready, width / 2 - 57, height / 2 + 35); // TODO: change here for replay margin top
+	ctx.drawImage(ready, width / 2 - 57, height / 2 - 35); // TODO: change here for replay margin top
 	maxScore = Math.max(maxScore, score);
 };
 
 let drawSky = function () {
 	let totWidth = 0;
 	while (totWidth < width) {
-		ctx.drawImage(sky, totWidth, height - 221);
+		ctx.drawImage(sky, totWidth, height - 500);
 		totWidth += sky.width;
 	}
 };
@@ -159,7 +175,7 @@ let drawLand = function () {
 		totWidth += land.width;
 	}
 	dist = dist + 2;
-	let tmp = Math.floor(dist - width * 0.65) % 220;
+	let tmp = Math.floor(dist - width * 0.65) % DISTANCE_BETWEEN_PIPES;
 	if (dist >= width * 0.65 && Math.abs(tmp) <= 1) {
 		score++;
 	}
@@ -168,9 +184,9 @@ let drawLand = function () {
 let drawPipe = function (x, y) {
 	// drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
 	ctx.drawImage(pipe, x, 0 + 5, pipe.width, y);
-	ctx.drawImage(pipeDown, x, y);
+	ctx.drawImage(pipeDown, x - 0.5, y);
 	ctx.drawImage(pipe, x, y + PIPE_GAP + delta, pipe.width, height - 112);
-	ctx.drawImage(pipeUp, x - 28, y + PIPE_COLLISION_OFFSET + delta);
+	ctx.drawImage(pipeUp, x - 36, y + PIPE_COLLISION_OFFSET + delta);
 
 	if (x < birdPos + BIRD_WIDTH && x + 50 > birdPos &&
 		(birdY < y + BIRD_COLLISION_OFFSET_TOP || birdY + BIRD_COLLISION_HEIGHT > y + PIPE_COLLISION_OFFSET + delta)) {
@@ -232,14 +248,26 @@ let drawBird = function () {
 };
 
 
+// let drawScore = function () {
+// 	ctx.font = '20px "Press Start 2P"';
+// 	ctx.lineWidth = 5;
+// 	ctx.strokeStyle = '#fff';
+// 	ctx.fillStyle = '#000';
+// 	let txt = "" + score;
+// 	ctx.strokeText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
+// 	ctx.fillText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
+// };
+
 let drawScore = function () {
-	ctx.font = '20px "Press Start 2P"';
-	ctx.lineWidth = 5;
-	ctx.strokeStyle = '#fff';
-	ctx.fillStyle = '#000';
-	let txt = "" + score;
-	ctx.strokeText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
-	ctx.fillText(txt, (width - ctx.measureText(txt).width) / 2, height * 0.15);
+	let scoreStr = score.toString();
+	if (numberImages.length === 0) return;
+	const firstImg = numberImages[0];
+	let x = (width - scoreStr.length * firstImg.width) / 2;
+	for (let i = 0; i < scoreStr.length; i++) {
+		let digit = parseInt(scoreStr[i]);
+		const numberImage = numberImages[digit];
+		ctx.drawImage(numberImages[digit], x + i * (numberImage.width + 10), height * 0.2, numberImage.width, numberImage.height);
+	}
 };
 
 let drawShadow = function () {
@@ -267,7 +295,7 @@ let drawHidden = function () {
 };
 
 let drawCanvas = function () {
-	clearCanvas();
+	fillRestOfCanvasByAConcreteColorCode();
 	drawSky();
 	for (let i = pipeSt; i < pipeNumber; ++i) {
 		drawPipe(width - dist + i * DISTANCE_BETWEEN_PIPES, pipes[i]);
@@ -400,12 +428,16 @@ function hardMode() {
 }
 
 function flashlight() {
+	// @ts-ignore
 	document.getElementById("flashlight").style.background = ["red", "rgba(255, 255, 255, 0.6)"][+flashlight_switch];
+	// @ts-ignore
 	flashlight_switch ^= 1;
 }
 
 function hidden() {
+	// @ts-ignore
 	document.getElementById("hidden").style.background = ["red", "rgba(255, 255, 255, 0.6)"][+hidden_switch];
+	// @ts-ignore
 	hidden_switch ^= 1;
 }
 
@@ -414,8 +446,10 @@ window.onload = function () {
 	mode = 0;
 	score = 0;
 	playdata = [0, 0];
+	// @ts-ignore
 	if (window.window.WeixinApi || window.WeixinJSBridge) {
 		wechat = true;
+		// @ts-ignore
 		WeixinApi.ready(function (Api) {
 
 			wxData = {
@@ -467,11 +501,15 @@ window.onload = function () {
 	delta = 100;
 	initCanvas();
 	easy = document.getElementById("easy");
+	// @ts-ignore
 	easy.onclick = easyMode;
 	normal = document.getElementById("normal");
+	// @ts-ignore
 	normal.onclick = normalMode;
 	hard = document.getElementById("hard");
+	// @ts-ignore
 	hard.onclick = hardMode;
+	// @ts-ignore
 	document.getElementById("flashlight").onclick = flashlight;
 	//document.getElementById("hidden").onclick = hidden;
 	window.onresize = function () {
