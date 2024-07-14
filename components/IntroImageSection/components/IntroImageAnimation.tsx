@@ -14,7 +14,7 @@ const IntroImageAnimation = () => {
     const starMiddle = '/images/intro/STAR_MIDDLE.png';
     const starLeft = '/images/intro/STAR_LEFT.png';
     const starRight = '/images/intro/STAR_RIGHT.png';
-    const slideDistance = 250;
+    const slideDistance = 475;
 
     const handleMouseEnter = () => {
         if (leaveTimer) {
