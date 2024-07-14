@@ -68,12 +68,12 @@ const IntroImageAnimation = () => {
         return () => clearTimeout(timeoutId);
     }, [isHovered]);
 
-    const animateStarImage = (src: string) => {
+    const animateStarImage = (src: string, precedence: string) => {
         return (
             <motion.img
                 src={src}
                 alt="stars"
-                className="absolute top-0 z-1"
+                className={`absolute top-0 ${precedence}`}
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -86,52 +86,53 @@ const IntroImageAnimation = () => {
     };
 
     return (
+        // Layer sequence: Main BG (bottom) -> white clouds -> fairy tales -> stars -> golden clouds
         <div className="relative w-auto min-w-full min-h-full max-w-none">
             <img
                 src={homepageBgImage}
                 alt="intro_image_1"
                 className="object-cover w-full h-full"
             />
-            <animated.img
-                src={centerHomepageBrandText}
-                alt="center_brand_text"
-                className="absolute top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
-                style={centerTextSpring}
-            />
-            {animateStarImage(starLeft)}
-            {animateStarImage(starRight)}
-            {animateStarImage(starMiddle)}
             <div>
-                <animated.img
-                    src={yellowLeftCloudImage}
-                    alt="left_yellow_cloud"
-                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
-                    style={leftImageSpring}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                />
                 <animated.img
                     src={whiteLeftCloudImage}
                     alt="left_white_cloud"
-                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
+                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10000"
                     style={leftImageSpring}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                />
-            </div>
-            <div>
-                <animated.img
-                    src={yellowRightCloudImage}
-                    alt="right_yellow_cloud"
-                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
-                    style={rightImageSpring}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
                 <animated.img
                     src={whiteRightCloudImage}
                     alt="right_white_cloud"
-                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
+                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10000"
+                    style={rightImageSpring}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+            </div>
+            <animated.img
+                src={centerHomepageBrandText}
+                alt="center_brand_text"
+                className="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10001"
+                style={centerTextSpring}
+            />
+            {animateStarImage(starLeft, 'z-10002')}
+            {animateStarImage(starRight, 'z-10002')}
+            {animateStarImage(starMiddle, 'z-10002')}
+            <div>
+                <animated.img
+                    src={yellowLeftCloudImage}
+                    alt="left_yellow_cloud"
+                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10003"
+                    style={leftImageSpring}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+                <animated.img
+                    src={yellowRightCloudImage}
+                    alt="right_yellow_cloud"
+                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10003"
                     style={rightImageSpring}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
