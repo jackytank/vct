@@ -127,7 +127,7 @@ let initCanvas = function () {
 	// @ts-ignore
 	canvas.width = width = window.innerWidth;
 	// @ts-ignore
-	canvas.height = height = window.innerHeight - 100;
+	canvas.height = height = window.innerHeight;
 	if (is_touch_device()) {
 		canvas.addEventListener("touchend", function (e) { e.preventDefault(); }, false);
 		canvas.addEventListener("touchstart", function (e) {

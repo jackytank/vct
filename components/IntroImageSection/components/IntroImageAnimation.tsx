@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react';
 const IntroImageAnimation = () => {
     const [isHovered, setIsHovered] = useState(false);
     const [leaveTimer, setLeaveTimer] = useState<NodeJS.Timeout | null>(null);
-    const homepageBgImage = '/images/intro/BG_VCT.png';
+    // const homepageBgImage = '/images/intro/BG_VCT.png';
+    const homepageBgImageRevise = '/images/intro/BG_Re.png';
     const yellowLeftCloudImage = '/images/intro/CLOUD_YELLOW_LEFT.png';
     const yellowRightCloudImage = '/images/intro/CLOUD_YELLOW_RIGHT.png';
     const whiteLeftCloudImage = '/images/intro/CLOUD_WHITE_LEFT.png';
@@ -14,7 +15,7 @@ const IntroImageAnimation = () => {
     const starMiddle = '/images/intro/STAR_MIDDLE.png';
     const starLeft = '/images/intro/STAR_LEFT.png';
     const starRight = '/images/intro/STAR_RIGHT.png';
-    const slideDistance = 475;
+    const slideDistance = 380;
 
     const handleMouseEnter = () => {
         if (leaveTimer) {
@@ -89,11 +90,11 @@ const IntroImageAnimation = () => {
         // Layer sequence: Main BG (bottom) -> white clouds -> fairy tales -> stars -> golden clouds
         <div className="relative w-auto min-w-full min-h-full max-w-none">
             <img
-                src={homepageBgImage}
+                src={homepageBgImageRevise}
                 alt="intro_image_1"
                 className="object-cover w-full h-full"
             />
-            <div>
+            {/* <div>
                 <animated.img
                     src={whiteLeftCloudImage}
                     alt="left_white_cloud"
@@ -110,20 +111,19 @@ const IntroImageAnimation = () => {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
-            </div>
-            <animated.img
+            </div> */}
+            {/* <animated.img
                 src={centerHomepageBrandText}
                 alt="center_brand_text"
                 className="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10001"
                 style={centerTextSpring}
-            />
+            /> */}
             {animateStarImage(starLeft, 'z-10002')}
             {animateStarImage(starRight, 'z-10002')}
             {animateStarImage(starMiddle, 'z-10002')}
             <div>
                 <animated.img
                     src={yellowLeftCloudImage}
-                    alt="left_yellow_cloud"
                     className="absolute top-0 left-0 transform -translate-y-1/2 z-10003"
                     style={leftImageSpring}
                     onMouseEnter={handleMouseEnter}
