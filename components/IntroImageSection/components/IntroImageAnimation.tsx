@@ -5,14 +5,17 @@ import React, { useEffect, useState } from 'react';
 const IntroImageAnimation = () => {
     const [isHovered, setIsHovered] = useState(false);
     const [leaveTimer, setLeaveTimer] = useState<NodeJS.Timeout | null>(null);
-    const homepageBgImage = '/images/intro/BG_VCT.png';
+    // const homepageBgImage = '/images/intro/BG_VCT.png';
+    const homepageBgImageRevise = '/images/intro/BG_Re.png';
     const yellowLeftCloudImage = '/images/intro/CLOUD_YELLOW_LEFT.png';
     const yellowRightCloudImage = '/images/intro/CLOUD_YELLOW_RIGHT.png';
     const whiteLeftCloudImage = '/images/intro/CLOUD_WHITE_LEFT.png';
     const whiteRightCloudImage = '/images/intro/CLOUD_WHITE_RIGHT.png';
     const centerHomepageBrandText = '/images/intro/CO_TICH_TYPO.png';
-    const starsImage = '/images/intro/STARS.png';
-    const slideDistance = 250;
+    const starMiddle = '/images/intro/STAR_MIDDLE.png';
+    const starLeft = '/images/intro/STAR_LEFT.png';
+    const starRight = '/images/intro/STAR_RIGHT.png';
+    const slideDistance = 380;
 
     const handleMouseEnter = () => {
         if (leaveTimer) {
@@ -66,23 +69,12 @@ const IntroImageAnimation = () => {
         return () => clearTimeout(timeoutId);
     }, [isHovered]);
 
-    return (
-        <div className="relative w-auto min-w-full min-h-full max-w-none">
-            <img
-                src={homepageBgImage}
-                alt="intro_image_1"
-                className="object-cover w-full h-full"
-            />
-            <animated.img
-                src={centerHomepageBrandText}
-                alt="center_brand_text"
-                className="absolute top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
-                style={centerTextSpring}
-            />
+    const animateStarImage = (src: string, precedence: string) => {
+        return (
             <motion.img
-                src={starsImage}
+                src={src}
                 alt="stars"
-                className="absolute top-0 z-1"
+                className={`absolute top-0 ${precedence}`}
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -91,37 +83,56 @@ const IntroImageAnimation = () => {
                 }}
                 transition={{ duration: 1, delay: 0.1, repeat: Infinity, repeatType: "reverse" }}
             />
-            <div>
-                <animated.img
-                    src={yellowLeftCloudImage}
-                    alt="left_yellow_cloud"
-                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
-                    style={leftImageSpring}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                />
+        );
+    };
+
+    return (
+        // Layer sequence: Main BG (bottom) -> white clouds -> fairy tales -> stars -> golden clouds
+        <div className="relative w-auto min-w-full min-h-full max-w-none">
+            <img
+                src={homepageBgImageRevise}
+                alt="intro_image_1"
+                className="object-cover w-full h-full"
+            />
+            {/* <div>
                 <animated.img
                     src={whiteLeftCloudImage}
                     alt="left_white_cloud"
-                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10"
+                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10000"
                     style={leftImageSpring}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                />
-            </div>
-            <div>
-                <animated.img
-                    src={yellowRightCloudImage}
-                    alt="right_yellow_cloud"
-                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
-                    style={rightImageSpring}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
                 <animated.img
                     src={whiteRightCloudImage}
                     alt="right_white_cloud"
-                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10"
+                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10000"
+                    style={rightImageSpring}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+            </div> */}
+            {/* <animated.img
+                src={centerHomepageBrandText}
+                alt="center_brand_text"
+                className="absolute top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10001"
+                style={centerTextSpring}
+            /> */}
+            {animateStarImage(starLeft, 'z-10002')}
+            {animateStarImage(starRight, 'z-10002')}
+            {animateStarImage(starMiddle, 'z-10002')}
+            <div>
+                <animated.img
+                    src={yellowLeftCloudImage}
+                    className="absolute top-0 left-0 transform -translate-y-1/2 z-10003"
+                    style={leftImageSpring}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+                <animated.img
+                    src={yellowRightCloudImage}
+                    alt="right_yellow_cloud"
+                    className="absolute top-0 right-0 transform -translate-y-1/2 z-10003"
                     style={rightImageSpring}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
